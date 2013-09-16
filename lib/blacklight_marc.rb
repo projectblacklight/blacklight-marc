@@ -1,5 +1,10 @@
 require "blacklight_marc/version"
 
 module BlacklightMarc
-  # Your code goes here...
+  class Railtie < Rails::Railtie
+    rake_tasks do
+      load "railties/solr_marc.rake"
+    end
+  end
+  
 end

@@ -3,19 +3,16 @@
 # Marc Record defaults to indexing lc_records.utf8.mrc
 # config.properties defaults to config/demo_config.properties (in the plugin, not the rails app)
 
-
 require 'fileutils'
-
-
 
 namespace :solr do
   namespace :marc do
     
     
     desc "Index the supplied test data into Solr"
-    task :index_test_data do
+    task :index_test_data => :environment do
       # for now we are assuming test data is located in BL source checkout. 
-      ENV['MARC_FILE'] = File.expand_path("./test_support/data/test_data.utf8.mrc", Blacklight.root )
+      ENV['MARC_FILE'] = File.expand_path("../../../test_support/data/test_data.utf8.mrc", __FILE__ )
       
       # solr_path and solr_war_path will be picked up from 
       # jetty_path in solr.yml by main work task. 
@@ -25,7 +22,6 @@ namespace :solr do
     
     desc "Index marc data using SolrMarc. Available environment variables: MARC_RECORDS_PATH, CONFIG_PATH, SOLR_MARC_MEM_ARGS"
     task :index => "index:work"
-
     namespace :index do
 
       task :work do
