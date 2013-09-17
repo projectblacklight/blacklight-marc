@@ -6,5 +6,4 @@ module BlacklightMarc
       load "railties/solr_marc.rake"
     end
   end
-  
 end
