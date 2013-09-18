@@ -34,11 +34,6 @@ EOF
       directory("config/SolrMarc")
     end
 
-    # Generate blacklight catalog controller
-    def create_blacklight_catalog
-      copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb"
-    end   
-
     # add MARC-specific extensions to the solr document
     def add_marc_extension_to_solrdocument
 
