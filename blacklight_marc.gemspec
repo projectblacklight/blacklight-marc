@@ -20,7 +20,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
-  spec.add_dependency "railties", ">= 3.2.6", "< 5"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec-rails"
+  spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1
   spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.
