@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/projectblacklight/blacklight_marc.png?branch=master)](https://travis-ci.org/projectblacklight/blacklight_marc)
+
 # BlacklightMarc
 
-TODO: Write a gem description
+MARC-specific enhancements for [Blacklight](https://github.com/projectblacklight/blacklight)
 
 ## Installation
 
@@ -12,13 +14,11 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+## Documentation, Information and Support
 
-    $ gem install blacklight_marc
-
-## Usage
-
-TODO: Write usage instructions here
+* [Project Homepage](http://projectblacklight.org)
+* [Developer Documentation](https://github.com/projectblacklight/blacklight/wiki)
+* [Quickstart Guide](https://github.com/projectblacklight/blacklight/wiki/Quickstart)
 
 ## Contributing
 
