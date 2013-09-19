@@ -6,28 +6,10 @@ module BlacklightMarc
     source_root File.expand_path('../templates', __FILE__)
 
     desc """
-     1. Adds additional mime types to you application in the file '/config/initializers/mime_types.rb'
-     2. Creates config/SolrMarc/... with settings for SolrMarc
-     3. Creates a CatalogController with some some demo fields for MARC-like data
-     4. Injects MARC-specific behaviors into the SolrDocument
+     1. Creates config/SolrMarc/... with settings for SolrMarc
+     2. Creates a CatalogController with some some demo fields for MARC-like data
+     3. Injects MARC-specific behaviors into the SolrDocument
     """
-
-    # Content types used by Marc Document extension, possibly among others.
-    # Registering a unique content type with 'register' (rather than
-    # register_alias) will allow content-negotiation for the format. 
-    def add_mime_types
-      puts "Updating Mime Types"
-      insert_into_file "config/initializers/mime_types.rb", :after => "# Be sure to restart your server when you modify this file." do <<EOF
-Mime::Type.register_alias "text/plain", :refworks_marc_txt
-Mime::Type.register_alias "text/plain", :openurl_kev
-Mime::Type.register "application/x-endnote-refer", :endnote
-Mime::Type.register "application/marc", :marc
-Mime::Type.register "application/marcxml+xml", :marcxml, 
-      ["application/x-marc+xml", "application/x-marcxml+xml", 
-       "application/marc+xml"]
-EOF
-      end
-    end 
     
     # Copy all files in templates/config directory to host config
     def create_configuration_files
