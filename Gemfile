@@ -11,6 +11,7 @@ group :test do
   gem "bootstrap-sass"
   gem 'turbolinks'
   gem "unicode", :platforms => [:mri_18, :mri_19]
+  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
 end
 
 if File.exists?('spec/test_app_templates/Gemfile.extra')
