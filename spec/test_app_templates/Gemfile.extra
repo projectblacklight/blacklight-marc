@@ -21,6 +21,6 @@ group :test do
   gem 'simplecov', :platform => :mri_19
 end
 
-gem 'blacklight', :path => '/Users/cabeer/Projects/blacklight'
+gem 'blacklight', :github => 'projectblacklight/blacklight'
 gem 'jettywrapper', '>= 1.2.0'
 
