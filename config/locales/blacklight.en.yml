@@ -1,0 +1,13 @@
+en:
+
+  blacklight:
+    tools:
+      librarian_view: 'Librarian View'
+
+
+    search:
+      librarian_view:
+        title: 'Librarian View'
+        leader: 'LEADER %{leader}'
+        empty: 'No MARC data found.'
+

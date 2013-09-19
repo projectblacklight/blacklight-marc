@@ -1,0 +1,13 @@
+fr:
+
+  blacklight:
+
+    tools:
+      librarian_view: 'Vue UNIMARC'
+
+    search:
+
+      librarian_view:
+        title: 'Vue UNIMARC'
+        leader: 'LABEL %{leader}'
+        empty: 'Pas MARC trouvé.'

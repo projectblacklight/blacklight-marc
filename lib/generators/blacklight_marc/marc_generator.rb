@@ -9,6 +9,7 @@ module BlacklightMarc
      1. Creates config/SolrMarc/... with settings for SolrMarc
      2. Creates a CatalogController with some some demo fields for MARC-like data
      3. Injects MARC-specific behaviors into the SolrDocument
+     4. Injects MARC-specific behaviors into the CatalogController
     """
     
     # Copy all files in templates/config directory to host config
@@ -38,6 +39,19 @@ module BlacklightMarc
 EOF
       end
     end
+
+    # Add MARC behaviors to the catalog controller
+  def inject_blacklight_controller_behavior    
+#    prepend_file("app/controllers/application_controller.rb", "require 'blacklight/controller'\n\n")
+    inject_into_class "app/controllers/catalog_controller.rb", "CatalogController", :after => "include Blacklight::Catalog" do
+      "  include BlacklightMarc::Catalog\n"
+    end
+  end
+
+
+  def inject_blacklight_marc_routes
+    route('BlacklightMarc.add_routes(self)')
+  end
 
   end
 end

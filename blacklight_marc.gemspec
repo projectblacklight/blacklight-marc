@@ -1,4 +1,3 @@
-# coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'blacklight_marc/version'
@@ -22,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-rails"
+  spec.add_development_dependency "jettywrapper"
   spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1

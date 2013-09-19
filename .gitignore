@@ -17,3 +17,4 @@ test/version_tmp
 tmp
 lib/solrmarc.log
 spec/internal
+jetty

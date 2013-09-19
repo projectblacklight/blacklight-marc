@@ -1,20 +1,39 @@
 require "bundler/gem_tasks"
+ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.0.0.zip"
 APP_ROOT = File.expand_path("..", __FILE__)
 
 TEST_APP_TEMPLATES = 'spec/test_app_templates'
 TEST_APP = 'spec/internal'
 
+require 'jettywrapper'
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => [:ci]
 
-desc "Run specs"
-task :ci => ['blacklight_marc:generate', 'spec'] do |t|
+task :ci => ['blacklight_marc:generate', 'jetty:clean'] do
+  ENV['environment'] = "test"
+  jetty_params = Jettywrapper.load_config
+  jetty_params[:startup_wait]= 60
+  error = Jettywrapper.wrap(jetty_params) do
+    Rake::Task["blacklight_marc:fixtures"].invoke
+    Rake::Task['spec'].invoke
+  end
+  raise "test failures: #{error}" if error
 end
 
+
 namespace :blacklight_marc do
+
+  desc "Load fixtures"
+  task :fixtures => [:generate] do
+    within_test_app do
+      system "rake solr:marc:index_test_data RAILS_ENV=test"
+      abort "Error running fixtures" unless $?.success?
+    end
+  end
+
   desc "Create the test rails app"
   task :generate do
     unless File.exists?('spec/internal/Rakefile')

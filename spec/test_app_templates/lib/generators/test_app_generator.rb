@@ -23,7 +23,7 @@ class TestAppGenerator < Rails::Generators::Base
   def run_blacklight_generator
     say_status("warning", "GENERATING BL", :yellow)       
 
-    generate 'blacklight'
+    generate 'blacklight', '--marc'
   end
 
   def run_test_support_generator
