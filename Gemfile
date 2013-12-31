@@ -3,14 +3,10 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in blacklight_marc.gemspec
 gemspec
 
-gem 'simplecov', :platform => :mri
-
 group :test do
   gem 'devise'
-  gem 'devise-guests'
   gem "bootstrap-sass"
   gem 'turbolinks'
-  gem "unicode", :platforms => [:mri_18, :mri_19]
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
 end
 
