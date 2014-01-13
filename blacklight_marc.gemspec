@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["justin@curationexperts.com"]
   spec.description   = %q{SolrMarc support for Blacklight}
   spec.summary       = %q{SolrMarc support for Blacklight}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/projectblacklight/blacklight_marc"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
