@@ -14,6 +14,16 @@ And then execute:
 
     $ bundle
 
+After running the blacklight generator, run the blacklight_marc generator:
+
+    $ rails generate blacklight_marc:marc
+
+## Features
+* Rake task `solr:marc:index` to import .mrc files using SolrMarc
+* Librarian view at `catalog/:id/librarian_view`
+* Blacklight::Solr::Document mixins for exporting and transforming MARC data from a stored Solr field
+
+
 ## Documentation, Information and Support
 
 * [Project Homepage](http://projectblacklight.org)
