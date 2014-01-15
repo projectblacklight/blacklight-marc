@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.version       = BlacklightMarc::VERSION
   spec.authors       = ["Justin Coyne"]
   spec.email         = ["justin@curationexperts.com"]
-  spec.description   = %q{SolrMarc support for Blacklight}
-  spec.summary       = %q{SolrMarc support for Blacklight}
+  spec.description   = %q{MARC support for Blacklight}
+  spec.summary       = %q{MARC support for Blacklight}
   spec.homepage      = "https://github.com/projectblacklight/blacklight_marc"
   spec.license       = "MIT"
 
