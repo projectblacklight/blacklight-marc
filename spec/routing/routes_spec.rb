@@ -6,6 +6,10 @@ describe "Routing" do
       { :get => "/catalog/111/librarian_view" }.should route_to(:controller => 'catalog', :action => 'librarian_view', :id => "111")
       { :get => librarian_view_catalog_path('111') }.should route_to(:controller => 'catalog', :action => 'librarian_view', :id => "111")
     end
+    it "should map {:controller => 'catalog', :action => 'endnote'} to /catalog/endnote" do
+      { :get => "/catalog/endnote" }.should route_to(:controller => 'catalog', :action => 'endnote')
+      { :get => endnote_catalog_path }.should route_to(:controller => 'catalog', :action => 'endnote')
+    end
   end
 end
 

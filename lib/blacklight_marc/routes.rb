@@ -32,6 +32,8 @@ module BlacklightMarc
         add_routes do |options|
           # Catalog stuff.
           get 'catalog/:id/librarian_view', :to => "catalog#librarian_view", :as => "librarian_view_catalog"
+          get "catalog/endnote"
+          
         end
       end
    end
