@@ -14,7 +14,7 @@ describe CatalogController do
 %D c1984. 
 %I Devir, 
 %@ 9650101373 
-%T Shodede-yam Yehudiyim : sipurim mafliʼim ha-mevusasim ʻal ʻuvdot hisṭoriyot /\n\n"
+%T Shodede-yam Yehudiyim : sipurim mafliʼim ha-mevusasim ʻal ʻuvdot hisṭoriyot /\n\n\n"
     end
   end
 
