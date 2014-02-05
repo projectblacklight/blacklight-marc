@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/projectblacklight/blacklight_marc.png?branch=master)](https://travis-ci.org/projectblacklight/blacklight_marc)
 
-# BlacklightMarc
+# Blacklight::Marc
 
 MARC-specific enhancements for [Blacklight](https://github.com/projectblacklight/blacklight)
 
@@ -8,7 +8,7 @@ MARC-specific enhancements for [Blacklight](https://github.com/projectblacklight
 
 Add this line to your application's Gemfile:
 
-    gem 'blacklight_marc'
+    gem 'blacklight-marc'
 
 And then execute:
 
@@ -21,6 +21,7 @@ After running the blacklight generator, run the blacklight_marc generator:
 ## Features
 * Rake task `solr:marc:index` to import .mrc files using SolrMarc
 * Librarian view at `catalog/:id/librarian_view`
+* Export records to refworks and endnote
 * Blacklight::Solr::Document mixins for exporting and transforming MARC data from a stored Solr field
 
 
