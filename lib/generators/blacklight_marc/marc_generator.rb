@@ -44,13 +44,13 @@ EOF
   def inject_blacklight_controller_behavior    
 #    prepend_file("app/controllers/application_controller.rb", "require 'blacklight/controller'\n\n")
     inject_into_class "app/controllers/catalog_controller.rb", "CatalogController", :after => "include Blacklight::Catalog" do
-      "  include BlacklightMarc::Catalog\n"
+      "  include Blacklight::Marc::Catalog\n"
     end
   end
 
 
   def inject_blacklight_marc_routes
-    route('BlacklightMarc.add_routes(self)')
+    route('Blacklight::Marc.add_routes(self)')
   end
 
   end

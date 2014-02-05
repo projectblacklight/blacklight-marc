@@ -1,4 +1,4 @@
-module BlacklightMarc
+module Blacklight::Marc
   class Railtie < Rails::Railtie
     rake_tasks do
       load "railties/solr_marc.rake"

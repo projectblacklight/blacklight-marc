@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module BlacklightMarc
+module Blacklight::Marc
   class Routes
 
     def initialize(router, options)
@@ -32,7 +32,7 @@ module BlacklightMarc
         add_routes do |options|
           # Catalog stuff.
           get 'catalog/:id/librarian_view', :to => "catalog#librarian_view", :as => "librarian_view_catalog"
-          get "catalog/endnote"
+          get "catalog/endnote", :as => "endnote_catalog"
           
         end
       end
