@@ -1,4 +1,4 @@
-module BlacklightMarc
+module Blacklight::Marc
   module Catalog
     def librarian_view
       @response, @document = get_solr_response_for_doc_id

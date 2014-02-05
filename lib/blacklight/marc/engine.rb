@@ -1,7 +1,7 @@
-require "blacklight_marc"
+require "blacklight/marc"
 require "rails"
 
-module BlacklightMarc
+module Blacklight::Marc
   class Engine < Rails::Engine
 
   end

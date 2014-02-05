@@ -42,7 +42,7 @@ namespace :blacklight_marc do
       puts "Copying gemfile"
       open("#{TEST_APP}/Gemfile", 'a') do |f|
         f.write File.read(TEST_APP_TEMPLATES + "/Gemfile.extra")
-        f.write "gem 'blacklight_marc', :path => '../../'" 
+        f.write "gem 'blacklight-marc', :path => '../../'" 
       end
       puts "Copying generator"
       `cp -r #{TEST_APP_TEMPLATES}/lib/generators #{TEST_APP}/lib`
