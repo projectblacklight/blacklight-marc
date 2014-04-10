@@ -10,6 +10,12 @@ gem 'simplecov', '~> 0.7.1', require: false
 gem 'coveralls', require: false
 
 gem 'engine_cart', '~> 0.3.0'
+
+# pin to known-working versions of rails and dependencies
+gem 'rails', '4.0.4'
+gem 'sass', '~> 3.2.15'
+gem 'sprockets', '~> 2.11.0'
+
 group :test do
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
 end
