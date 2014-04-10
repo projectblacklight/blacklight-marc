@@ -11,25 +11,28 @@ class TestAppGenerator < Rails::Generators::Base
     end
   end
 
-  def copy_blacklight_test_app_rake_task
-    copy_file "lib/tasks/blacklight_test_app.rake"
-  end
-
   def remove_index 
     remove_file "public/index.html"
-    remove_file 'app/assets/images/rails.png'
   end
-
+  
   def run_blacklight_generator
     say_status("warning", "GENERATING BL", :yellow)       
+    gem 'blacklight', "5.4.0.rc1"
 
-    generate 'blacklight:install'
-    generate 'blacklight_marc:marc'
+    Bundler.with_clean_env do
+      run "bundle install"
+    end
+
+    generate 'blacklight:install', '--devise --jettywrapper'
   end
 
   def run_test_support_generator
     say_status("warning", "GENERATING test_support", :yellow)       
 
     generate 'blacklight:test_support'
+  end
+  
+  def run_blacklight_marc_generator
+    generate 'blacklight_marc:marc'
   end
 end
