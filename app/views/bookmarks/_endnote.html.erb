@@ -1,3 +1,5 @@
-      <li class="endnote">
-        <%= link_to t('blacklight.tools.endnote'), endnote_catalog_path(:sort=>params[:sort], :per_page=>params[:per_page], :id => @bookmarks.collect {|doc| doc.document_id}, :format => 'endnote'), {:class => 'btn btn-default'}%>
-      </li>
+<% if @document_list.any? {|d| d.exports_as? :endnote } %>
+  <li class="endnote">
+    <%= link_to t('blacklight.tools.endnote'), bookmarks_path(:endnote, params_for_search), :class => "btn btn-default", :id => "endnoteLink" %>
+  </li>
+<% end %>

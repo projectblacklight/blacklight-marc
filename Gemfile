@@ -1,15 +1,27 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in blacklight_marc.gemspec
-gemspec
+# Please see blacklight_marc.gemspec for dependency information.
+gemspec path: File.expand_path('..', __FILE__)
+
+
+# Peg simplecov to < 0.8 until this is resolved:
+# https://github.com/colszowka/simplecov/issues/281
+gem 'simplecov', '~> 0.7.1', require: false
+gem 'coveralls', require: false
+
+gem 'engine_cart', '~> 0.3.0'
+
+# pin to known-working versions of rails and dependencies
+gem 'rails', '4.0.4'
+gem 'sass', '~> 3.2.15'
+gem 'sprockets', '~> 2.11.0'
 
 group :test do
-  gem 'devise'
-  gem "bootstrap-sass"
-  gem 'turbolinks'
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
 end
 
-if File.exists?('spec/test_app_templates/Gemfile.extra')
-  eval File.read('spec/test_app_templates/Gemfile.extra'), nil, 'spec/test_app_templates/Gemfile.extra'
+file = File.expand_path("Gemfile", ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path("../spec/internal", __FILE__))
+if File.exists?(file)
+  puts "Loading #{file} ..." if $DEBUG # `ruby -d` or `bundle -v`
+  instance_eval File.read(file)
 end

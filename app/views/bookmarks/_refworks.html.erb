@@ -1,3 +1,5 @@
-      <li class="refworks">
-        <%= render :partial => 'catalog/refworks_form', :locals => {:documents=>@document_list} %>
-      </li>
+<% if @document_list.any? {|d| d.exports_as? :refworks_marc_txt } %>
+  <li class="refworks">
+    <%= link_to t('blacklight.tools.refworks'), refworks_export_url(url: bookmarks_export_url(:refworks_marc_txt, params_for_search)), :class => "btn btn-default", :id => "refworksLink" %>
+  </li>
+<% end %>

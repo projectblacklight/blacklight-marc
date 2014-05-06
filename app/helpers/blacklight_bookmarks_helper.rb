@@ -1,0 +1,3 @@
+module BlacklightBookmarksHelper
+
+end
