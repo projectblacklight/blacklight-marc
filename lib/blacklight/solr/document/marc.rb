@@ -43,8 +43,7 @@ module Blacklight::Solr::Document::Marc
   def load_marc
     case _marc_format_type.to_s
     when 'marcxml'
-      records = MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a
-      return records[0]
+      marc_record_from_marcxml
     when 'marc21'
       return MARC::Record.new_from_marc( fetch(_marc_source_field) )          
     else
@@ -53,7 +52,13 @@ module Blacklight::Solr::Document::Marc
     end      
   end
   
-  
+  def marc_record_from_marcxml
+    begin
+      MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
+    rescue Exception => e  
+      logger.error("Blacklight failed to convert marc record from xml into marc.  Exception was: #{e}")
+    end
+  end
   
   def _marc_helper
     @_marc_helper ||= (
