@@ -49,22 +49,23 @@ end
       it "should have a valid to_marc" do
         @solrdoc = SolrDocument.new(@hash_with_marcxml)
 
-        @solrdoc.should respond_to(:to_marc)
-        @solrdoc.to_marc.should be_kind_of(MARC::Record)        
+        expect(@solrdoc).to respond_to(:to_marc)
+        expect(@solrdoc.to_marc).to be_kind_of(MARC::Record)        
       end
       
       it "should not try to create marc for objects w/out stored marc (marcxml test only at this time)" do
         @hash_without_marcxml = get_hash_without_marcxml['response']['docs'][0]
         @solrdoc_without_marc = SolrDocument.new(@hash_without_marcxml)
-        @solrdoc_without_marc.should_not respond_to(:to_marc)
+
+        expect(@solrdoc_without_marc).not_to respond_to(:to_marc)
       end
 
       it "should fail gracefully when given bad marc xml" do
         hash_with_bad_marcxml = get_hash_with_bad_marcxml['response']['docs'][0]
         @solrdoc = SolrDocument.new(hash_with_bad_marcxml)
-        Rails.logger.should_receive(:error).with(error_message)
-        @solrdoc.should respond_to(:to_marc)
-        @solrdoc.to_marc.should be_nil
+        expect(Rails.logger).to receive(:error).with(error_message)
+        expect(@solrdoc).to respond_to(:to_marc)
+        expect(@solrdoc.to_marc).to be_nil
       end
 
     end 

@@ -25,3 +25,4 @@ else
     gem 'coffee-rails', "~> 4.0.0"
   end
 end
+gem 'transpec'
