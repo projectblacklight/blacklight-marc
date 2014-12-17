@@ -46,7 +46,9 @@ module Blacklight::Solr::Document::Marc
       records = MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a
       return records[0]
     when 'marc21'
-      return MARC::Record.new_from_marc( fetch(_marc_source_field) )          
+      return MARC::Record.new_from_marc( fetch(_marc_source_field) )
+    when 'json'
+      return MARC::Record.new_from_hash( JSON.parse( fetch(_marc_source_field) ) )
     else
 
       raise UnsupportedMarcFormatType.new("Only marcxml and marc21 are supported, this documents format is #{_marc_format_type} and the current extension parameters are #{self.class.extension_parameters.inspect}")
