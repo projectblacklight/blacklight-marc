@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-rails", '~> 2.99'
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency "capybara"
+  spec.add_development_dependency "engine_cart", "~> 0.4"
+
   spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1
