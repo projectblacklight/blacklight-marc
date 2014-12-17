@@ -49,17 +49,16 @@ module Blacklight::Solr::Document::Marc
     when 'json'
       return MARC::Record.new_from_hash( JSON.parse( fetch(_marc_source_field) ) )
     else
-
-      raise UnsupportedMarcFormatType.new("Only marcxml and marc21 are supported, this documents format is #{_marc_format_type} and the current extension parameters are #{self.class.extension_parameters.inspect}")
+      raise UnsupportedMarcFormatType.new("Only marcxml, marc21, and json are supported, this documents format is #{_marc_format_type} and the current extension parameters are #{self.class.extension_parameters.inspect}")
     end      
+  rescue Exception => e
+    raise e if e.is_a? UnsupportedMarcFormatType
+
+    Rails.logger.error("Blacklight failed to parse MARC record. Exception was: #{e}")
   end
   
   def marc_record_from_marcxml
-    begin
-      MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
-    rescue Exception => e  
-      Rails.logger.error("Blacklight failed to convert marc record from xml into marc.  Exception was: #{e}")
-    end
+    MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
   end
   
   def _marc_helper
