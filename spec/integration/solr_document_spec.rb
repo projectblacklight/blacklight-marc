@@ -41,8 +41,8 @@ end
       it "should have a valid to_marc" do
         @solrdoc = SolrDocument.new(@hash_with_marcxml)
 
-        @solrdoc.should respond_to(:to_marc)
-        @solrdoc.to_marc.should be_kind_of(MARC::Record)        
+        expect(@solrdoc).to respond_to(:to_marc)
+        expect(@solrdoc.to_marc).to be_kind_of(MARC::Record)        
       end
       
       it "should not try to create marc for objects w/out stored marc (marcxml test only at this time)" do
@@ -50,7 +50,7 @@ end
         # sure everything fails gracefully
         @hash_without_marcxml = get_hash_without_marcxml['response']['docs'][0]
         @solrdoc_without_marc = SolrDocument.new(@hash_without_marcxml)
-        @solrdoc_without_marc.should_not respond_to(:to_marc)
+        expect(@solrdoc_without_marc).not_to respond_to(:to_marc)
         # legacy check
       #        @solrdoc_without_marc.should respond_to(:marc)
       #        @solrdoc_without_marc.marc.should == nil
