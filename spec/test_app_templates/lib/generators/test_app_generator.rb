@@ -16,8 +16,8 @@ class TestAppGenerator < Rails::Generators::Base
   end
   
   def run_blacklight_generator
-    say_status("warning", "GENERATING BL", :yellow)       
-    gem 'blacklight', "~> 5.7.1"
+    say_status("warning", "GENERATING BL", :yellow) 
+    gem 'blacklight'
 
     Bundler.with_clean_env do
       run "bundle install"
