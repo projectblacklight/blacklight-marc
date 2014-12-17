@@ -5,8 +5,8 @@ describe BlacklightMarcHelper do
   let(:two) { SolrDocument.new }
   describe "render_refworks_texts" do
     before do
-      one.stub(:export_as_refworks_marc_txt => 'one')
-      two.stub(:export_as_refworks_marc_txt => 'two')
+      allow(one).to receive_messages(export_as_refworks_marc_txt: 'one')
+      allow(two).to receive_messages(export_as_refworks_marc_txt: 'two')
     end
     it "should render_refworks_texts" do
       expect(helper.render_refworks_texts([one, two])).to eq "one\ntwo\n"
@@ -16,8 +16,8 @@ describe BlacklightMarcHelper do
 
   describe "render_endnote_texts" do
     before do
-      one.stub(:export_as_endnote => 'one')
-      two.stub(:export_as_endnote => 'two')
+      allow(one).to receive_messages(export_as_endnote: 'one')
+      allow(two).to receive_messages(export_as_endnote: 'two')
     end
     it "should render_endnote_texts" do
       expect(helper.render_endnote_texts([one, two])).to eq "one\ntwo\n"
