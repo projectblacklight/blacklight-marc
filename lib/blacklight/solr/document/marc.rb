@@ -58,7 +58,7 @@ module Blacklight::Solr::Document::Marc
     begin
       MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
     rescue Exception => e  
-      logger.error("Blacklight failed to convert marc record from xml into marc.  Exception was: #{e}")
+      Rails.logger.error("Blacklight failed to convert marc record from xml into marc.  Exception was: #{e}")
     end
   end
   
