@@ -33,6 +33,6 @@ class TestAppGenerator < Rails::Generators::Base
   end
   
   def run_blacklight_marc_generator
-    generate 'blacklight_marc:marc'
+    generate 'blacklight:marc:install'
   end
 end

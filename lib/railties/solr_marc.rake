@@ -123,7 +123,7 @@ def compute_arguments
   # use :replicate_master_url for current env if present, otherwise :url
   # for current env. 
   # Also take jetty_path from there if present. 
-    if c = Blacklight.solr_config
+    if c = Blacklight.connection_config
       arguments[:solr_url] = c[:url]    
       if c[:jetty_path]
         arguments[:solr_path] ||= File.expand_path(File.join(c[:jetty_path], "solr"), Rails.root)

@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "blacklight", "~> 5.8"
+  spec.add_dependency "blacklight", "~> 5.10"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-activemodel-mocks"
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency "capybara"
-  spec.add_development_dependency "engine_cart", "~> 0.4"
+  spec.add_development_dependency "engine_cart", "~> 0.6"
 
   spec.add_dependency "rails"
   # Let's allow future versions of marc, count on

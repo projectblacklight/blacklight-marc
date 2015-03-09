@@ -1,9 +1,11 @@
 require "bundler/gem_tasks"
-ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.2.zip"
+ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.3.zip"
 
 require 'jettywrapper'
 require 'rspec/core/rake_task'
 require 'engine_cart/rake_task'
+
+EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -30,7 +32,7 @@ namespace :blacklight_marc do
   end
 
   desc "Clean out the test rails app"
-  task :clean => ['engine_cart:clean', 'jetty:clean'] do
+  task :clean => ['jetty:clean'] do
   end
 
   desc "Create the test rails app"
