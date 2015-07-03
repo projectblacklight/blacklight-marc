@@ -17,12 +17,11 @@ else
   gem 'rails', ENV['RAILS_VERSION']
 
   # explicitly include sass-rails to get compatible sprocket dependencies
-  if ENV['RAILS_VERSION'] and ENV['RAILS_VERSION'] =~ /^4.2/
-    gem 'sass-rails', ">= 5.0.0.beta1"
+  if ENV['RAILS_VERSION'].nil? || ENV['RAILS_VERSION'] > "4.2"
     gem 'responders', "~> 2.0"
+    gem 'sass-rails', ">= 5.0"
   else
+    gem 'bootstrap-sass', '< 3.3.5' # 3.3.5 requires sass 3.3, incompatible with sass-rails 4.x
     gem 'sass-rails', "< 5.0"
-    gem 'coffee-rails', "~> 4.0.0"
   end
 end
-gem 'transpec'
