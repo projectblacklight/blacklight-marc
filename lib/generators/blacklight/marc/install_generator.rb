@@ -11,7 +11,18 @@ module Blacklight::Marc
      3. Injects MARC-specific behaviors into the SolrDocument
      4. Injects MARC-specific behaviors into the CatalogController
     """
-    
+
+    source_root File.expand_path('../templates', __FILE__)
+
+    def assets
+      insert_into_file "app/assets/stylesheets/blacklight.css.scss", after: "@import 'blacklight/blacklight';" do
+<<-EOF
+
+@import 'blacklight_marc';
+EOF
+      end
+    end
+
     # Copy all files in templates/config directory to host config
     def create_configuration_files
       directory("config/SolrMarc")
@@ -42,9 +53,8 @@ EOF
 
     # Add MARC behaviors to the catalog controller
   def inject_blacklight_controller_behavior    
-#    prepend_file("app/controllers/application_controller.rb", "require 'blacklight/controller'\n\n")
-    inject_into_class "app/controllers/catalog_controller.rb", "CatalogController", :after => "include Blacklight::Catalog" do
-      "  include Blacklight::Marc::Catalog\n"
+    inject_into_file "app/controllers/catalog_controller.rb", after:"include Blacklight::Catalog" do
+      "\n  include Blacklight::Marc::Catalog\n"
     end
   end
 
