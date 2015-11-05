@@ -1,17 +1,5 @@
 module BlacklightMarcHelper
 
-  def render_refworks_action? config, options = {}
-    options[:document] && options[:document].respond_to?(:export_formats) && options[:document].export_formats.keys.include?(:refworks_marc_txt )
-  end
-
-  def render_endnote_action? config, options = {}
-    options[:document] && options[:document].respond_to?(:export_formats) && options[:document].export_formats.keys.include?(:endnote )
-  end
-
-  def render_librarian_view_control? config, options = {}
-    respond_to? :librarian_view_catalog_path and options[:document] and options[:document].respond_to?(:to_marc)
-  end
-
   # This method should move to BlacklightMarc in Blacklight 6.x
   def refworks_export_url params = {}
     if params.is_a? ::SolrDocument or (params.nil? and instance_variable_defined? :@document)
@@ -26,15 +14,15 @@ module BlacklightMarcHelper
     "http://www.refworks.com/express/expressimport.asp?vendor=#{CGI.escape(params[:vendor] || application_name)}&filter=#{CGI.escape(params[:filter] || "MARC Format")}&encoding=65001" + (("&url=#{CGI.escape(params[:url])}" if params[:url]) || "")
   end
 
-  def refworks_catalog_path opts = {}
+  def refworks_solr_document_path opts = {}
     if opts[:id]
-      refworks_export_url(url: polymorphic_url(url_for_document(opts[:id]), format: :refworks_marc_txt, only_path: false))
+      refworks_export_url(url: solr_document_url(opts[:id], format: :refworks_marc_txt))
     end
   end
 
   # For exporting a single endnote document. (endnote_catalog_path is defined by blacklight-marc and it is used for multiple document export)
   def single_endnote_catalog_path opts = {}
-    catalog_path(opts.merge(format: 'endnote'))
+    solr_document_path(opts.merge(format: 'endnote'))
   end
 
 

@@ -3,6 +3,12 @@ require "rails"
 
 module Blacklight::Marc
   class Engine < Rails::Engine
+    config.autoload_paths += %W(
+      #{config.root}/app/presenters
+      #{config.root}/app/controllers/concerns
+      #{config.root}/app/models/concerns
+    )
+
     rake_tasks do
       load "railties/solr_marc.rake"
     end
