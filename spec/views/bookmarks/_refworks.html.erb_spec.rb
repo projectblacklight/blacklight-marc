@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'bookmarks/_refworks.html.erb' do
+  before do
+    allow(controller).to receive(:blacklight_config).and_return(CatalogController.blacklight_config)
+  end
+
   it "should have a link" do
     allow(view).to receive_messages(encrypt_user_id: 1)
     allow(view).to receive_messages(current_or_guest_user: mock_model(User))
