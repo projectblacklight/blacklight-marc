@@ -1,34 +1,29 @@
+language: ruby
+sudo: false
+
 notifications:
   email: false
 
-
 rvm:
-  - 2.1.4
+  - 2.2.3
 
 matrix:
   include:
-    - rvm: 2.1.4
-      env: "RAILS_VERSION=4.0.12"
-    - rvm: 2.0.0
-      env: "RAILS_VERSION=4.1.8"
-    - rvm: 1.9.3
-      env: "RAILS_VERSION=4.1.8"
-    - rvm: jruby
-      env: "RAILS_VERSION=4.1.8 JRUBY_OPTS=\"-J-Xms512m -J-Xmx1024m\""
-    - rvm: 2.1.4
-      env: "RAILS_VERSION=4.2.0.rc3"
+    - rvm: 2.2.2
+      env: "RAILS_VERSION=4.1.13"
+    - rvm: 2.1.6
+      env: "RAILS_VERSION=4.2.4"
 
 before_install:
   - gem install bundler
 
 env:
- - "RAILS_VERSION=3.2.21"
- - "RAILS_VERSION=4.1.8"
+ - "RAILS_VERSION=4.2.4"
 
 notifications:
   irc: "irc.freenode.org#blacklight"
   email:
       - blacklight-commits@googlegroups.com
-env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+global_env:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
