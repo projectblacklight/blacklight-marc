@@ -12,7 +12,8 @@ if ENV['COVERAGE'] and RUBY_VERSION =~ /^1.9/ and ruby_engine != "jruby"
   end
 end
 
-require File.expand_path("config/environment", ENV['RAILS_ROOT'] || File.expand_path("../internal", __FILE__))
+require 'engine_cart'
+EngineCart.load_application!
 
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
