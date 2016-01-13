@@ -1,5 +1,5 @@
 require "bundler/gem_tasks"
-ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.3.zip"
+ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip"
 
 require 'jettywrapper'
 require 'rspec/core/rake_task'

@@ -1,8 +1,9 @@
 en:
-
   blacklight:
     tools:
       librarian_view: 'Librarian View'
+      endnote: 'Export to EndNote'
+      refworks: 'Export to Refworks'
 
 
     search:
@@ -10,4 +11,3 @@ en:
         title: 'Librarian View'
         leader: 'LEADER %{leader}'
         empty: 'No MARC data found.'
-

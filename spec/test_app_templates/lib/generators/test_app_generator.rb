@@ -1,8 +1,6 @@
 require 'rails/generators'
 
 class TestAppGenerator < Rails::Generators::Base
-  source_root File.expand_path("../../../../test_app_templates", __FILE__)
-
   def fix_travis_rails_4 
     if ENV['TRAVIS']
       insert_into_file 'app/assets/stylesheets/application.css', :before =>'/*' do      

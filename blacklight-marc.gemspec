@@ -9,15 +9,17 @@ Gem::Specification.new do |spec|
   spec.email         = ["justin@curationexperts.com"]
   spec.description   = %q{MARC support for Blacklight}
   spec.summary       = %q{MARC support for Blacklight}
-  spec.homepage      = "https://github.com/projectblacklight/blacklight_marc"
+  spec.homepage      = "https://github.com/projectblacklight/blacklight-marc"
   spec.license       = "Apache 2.0"
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.files         = `git ls-files -z`.split("\x0")
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.bindir        = 'exe'
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "blacklight", ">= 5.10", '< 7'
+  spec.add_dependency "rails"
+  spec.add_dependency 'blacklight', '>= 6.0.0.pre3', '< 7'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
@@ -25,9 +27,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-activemodel-mocks"
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency "capybara"
-  spec.add_development_dependency "engine_cart", "~> 0.6"
+  spec.add_development_dependency "engine_cart", "~> 0.8"
 
-  spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1
   spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.

@@ -12,7 +12,8 @@ if ENV['COVERAGE'] and RUBY_VERSION =~ /^1.9/ and ruby_engine != "jruby"
   end
 end
 
-require File.expand_path("config/environment", ENV['RAILS_ROOT'] || File.expand_path("../internal", __FILE__))
+require 'engine_cart'
+EngineCart.load_application!
 
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
@@ -36,4 +37,10 @@ RSpec.configure do |config|
   #       # Equivalent to being in spec/controllers
   #     end
   config.infer_spec_type_from_file_location!
+
+  config.include(ControllerLevelHelpers, type: :helper)
+  config.before(:each, type: :helper) { initialize_controller_helpers(helper) }
+
+  config.include(ControllerLevelHelpers, type: :view)
+  config.before(:each, type: :view) { initialize_controller_helpers(view) }
 end
