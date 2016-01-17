@@ -1,0 +1,5 @@
+it:
+  blacklight:
+    tools:
+      endnote: 'Esporta in EndNote'
+      refworks: 'Esporta in Refworks'
