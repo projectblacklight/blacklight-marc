@@ -1,0 +1,5 @@
+es:
+  blacklight:
+    tools:
+      endnote: 'Exportar a EndNote'
+      refworks: 'Exportar a Refworks'
