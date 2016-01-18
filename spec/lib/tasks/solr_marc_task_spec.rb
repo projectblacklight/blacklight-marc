@@ -23,36 +23,32 @@ describe "solr:marc:*" do
       Rake.application.rake_require "../lib/railties/solr_marc"
       Rake::Task.define_task(:environment)
     end
-        
+
     describe 'solr:marc:index_test_data' do        
       it 'should print out usage using NOOP=true' do
         root = Rails.root
         ENV['NOOP'] = "true"
-        o = capture_stdout do      
-          @rake['solr:marc:index_test_data'].invoke      
+        o = capture_stdout do
+          @rake['solr:marc:index_test_data'].invoke
         end
-        
-        expect(o).to match(Regexp.escape("SolrMarc command that will be run:"))
+
+        expect(o).to match(Regexp.escape("Possible environment variables, with settings as invoked"))
       end    
     end
     
     describe "solr:marc:index" do
-      it "should produce proper java command" do
-        # can NOT figure out how to actually run solr:marc:index and trap
-        # it's backtick system call. So we'll run solr:marc:index:info and
-        # just test it's dry run output
+      after do
+        SolrMarc.indexer= nil
+      end
+      it "should index the test data configured" do
+        indexer = double(MarcIndexer)
+        allow(indexer).to receive(:process).with("dummy.mrc")
+        SolrMarc.indexer= indexer
+        #expect(indexer).to receive(:process).with("dummy.mrc")
         ENV["MARC_FILE"] = "dummy.mrc"
         output = capture_stdout do
-          @rake['solr:marc:index:info'].invoke
+          @rake['solr:marc:index:work'].invoke
         end
-        output =~ /SolrMarc command that will be run:\n\s*\n\s*(.*)\n/
-        java_cmd = $1
-        
-        expect(java_cmd).not_to be_nil
-        expect(java_cmd).to match "java -Xmx512m"
-        expect(java_cmd).to match /-jar .*\/SolrMarc\.jar/
-        expect(java_cmd).to match "#{Rails.root}/config/SolrMarc/config-test.properties dummy.mrc"
-        expect(java_cmd).to match "-Dsolr.hosturl=http://127.0.0.1:[0-9]{2,5}/solr"
       end
       
     end  

@@ -4,7 +4,24 @@
 # config.properties defaults to config/demo_config.properties (in the plugin, not the rails app)
 
 require 'fileutils'
+require 'traject'
+# monkey patch
+class Traject::SolrJsonWriter
+  def record_id_from_context(context)
+    marc_id = context.source_record && context.source_record['001'] && context.source_record['001'].value
+    output_id = context.output_hash["id"]
 
+    return [marc_id, output_id].compact.join("/")
+  end
+end
+module SolrMarc
+  def self.indexer
+    @indexer ||= ::MarcIndexer.new
+  end
+  def self.indexer=(ix)
+    @indexer = ix
+  end
+end
 namespace :solr do
   namespace :marc do
     
@@ -24,17 +41,17 @@ namespace :solr do
     task :index => "index:work"
     namespace :index do
 
-      task :work do
+      task :work => :environment do
         solrmarc_arguments = compute_arguments        
 
         # If no marc records given, display :info task
         if  (ENV["NOOP"] || (!solrmarc_arguments["MARC_FILE"]))                    
           Rake::Task[ "solr:marc:index:info" ].execute
-        else        
-          commandStr = solrmarc_command_line( solrmarc_arguments )
-          puts commandStr
-          puts
-          `#{commandStr}`
+        else
+          require './app/models/marc_indexer' unless defined?(MarcIndexer)
+          open(solrmarc_arguments['MARC_FILE']) do |io|
+            SolrMarc.indexer.process(io)
+          end
         end
         
       end # work
@@ -59,14 +76,6 @@ namespace :solr do
 
      Note that SolrMarc search path includes directory of config_path,
      so translation_maps and index_scripts dirs will be found there. 
-  
-  SOLRMARC_JAR_PATH: #{solrmarc_arguments[:solrmarc_jar_path]}
-  
-  SOLRMARC_MEM_ARGS: #{solrmarc_arguments[:solrmarc_mem_arg]}
-  
-  SolrMarc command that will be run:
-  
-  #{solrmarc_command_line(solrmarc_arguments)}
   EOS
       end
     end # index
@@ -133,18 +142,6 @@ def compute_arguments
   
   return arguments
 end
-
-def solrmarc_command_line(arguments)
-  cmd = "java #{arguments[:solrmarc_mem_arg]} "
-  cmd += " -Dsolr.hosturl=#{arguments[:solr_url]} " unless arguments[:solr_url].blank?
-  
-  cmd += " -Dsolrmarc.solr.war.path=#{arguments[:solr_war_path]}" unless arguments[:solr_war_path].blank?
-  cmd += " -Dsolr.path=#{arguments[:solr_path]}" unless arguments[:solr_path].blank?
-  
-  cmd += " -jar #{arguments[:solrmarc_jar_path]} #{arguments[:config_properties_path]} #{arguments["MARC_FILE"]}"  
-  return cmd  
-end
-
 
 def locate_path(*subpath_fragments)
   local_root = File.expand_path File.join(File.dirname(__FILE__), '..', '..')  
