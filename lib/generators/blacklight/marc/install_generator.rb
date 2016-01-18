@@ -26,7 +26,7 @@ EOF
 
     # Copy all files in templates/config directory to host config
     def create_configuration_files
-      directory("config/SolrMarc")
+      directory("config/translation_maps")
     end
 
     def create_models

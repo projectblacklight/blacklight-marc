@@ -1,4 +1,4 @@
-$:.unshift './config/SolrMarc'
+$:.unshift './config'
 class MarcIndexer < Blacklight::Marc::Indexer
   # this mixin defines lambda facotry method get_format for legacy marc formats
   include Blacklight::Marc::Indexer::Formats
