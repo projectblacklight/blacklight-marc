@@ -8,8 +8,9 @@ module Blacklight::Marc
     desc """
      1. Creates config/SolrMarc/... with settings for SolrMarc
      2. Creates a CatalogController with some some demo fields for MARC-like data
-     3. Injects MARC-specific behaviors into the SolrDocument
-     4. Injects MARC-specific behaviors into the CatalogController
+     3. Creates a MarcIndexer model
+     4. Injects MARC-specific behaviors into the SolrDocument
+     5. Injects MARC-specific behaviors into the CatalogController
     """
 
     source_root File.expand_path('../templates', __FILE__)
@@ -25,9 +26,12 @@ EOF
 
     # Copy all files in templates/config directory to host config
     def create_configuration_files
-      directory("config/SolrMarc")
+      directory("config/translation_maps")
     end
 
+    def create_models
+      copy_file "app/models/marc_indexer.rb", "app/models/marc_indexer.rb"
+    end
     # add MARC-specific extensions to the solr document
     def add_marc_extension_to_solrdocument
 

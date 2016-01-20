@@ -26,7 +26,7 @@ namespace :blacklight_marc do
   desc "Load fixtures"
   task :fixtures => [:generate] do
     within_test_app do
-      system "rake solr:marc:index_test_data RAILS_ENV=test"
+      system "bundle exec rake solr:marc:index_test_data RAILS_ENV=test"
       abort "Error running fixtures" unless $?.success?
     end
   end

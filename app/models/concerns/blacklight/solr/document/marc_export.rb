@@ -154,7 +154,6 @@ module Blacklight::Solr::Document::MarcExport
       "%7" => "250.a"
     }
     marc_obj = to_marc
-
     # TODO. This should be rewritten to guess
     # from actual Marc instead, probably.
     format_str = 'Generic'

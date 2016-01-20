@@ -18,7 +18,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails"
   spec.add_dependency 'blacklight', '>= 6.0.0.pre3', '< 7'
 
   spec.add_development_dependency "bundler", "~> 1.3"
@@ -29,7 +28,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "engine_cart", "~> 0.8"
 
+  spec.add_dependency "library_stdnums"
+  spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1
   spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.
+  spec.add_dependency "traject", "~>2.1"
+  spec.add_dependency 'marc-fastxmlwriter' # NO REXML
 end

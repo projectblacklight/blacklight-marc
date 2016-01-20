@@ -18,8 +18,25 @@ After running the blacklight generator, run the blacklight_marc generator:
 
     $ rails generate blacklight_marc:marc
 
+The generator will create a model called MarcIndexer. This model can be customized by modifying
+the field configurations in its initializer as a Traject 2 indexer; new indexing behaviors can
+be added to it via mixins or inline methods. Two example mixins are provided:
+```ruby
+MarcIndexer
+  # you would add one or both of the mixins below
+  include Blacklight::Marc::Indexer::Formats
+  include Blacklight::Marc::Indexer::Dewey
+  def initialize
+    # and define fields as normal with the mixed-in methods
+    to_field 'format', get_format
+    to_field 'dewey100', dewey_facets(base: :hundreds)
+    to_field 'dewey010', dewey_facets(base: :tens)
+    to_field 'dewey_text', dewey_text
+  end
+end
+```
 ## Features
-* Rake task `solr:marc:index` to import .mrc files using SolrMarc
+* Rake task `solr:marc:index` to import .mrc files using Traject and app/models/marc_indexer
 * Librarian view at `catalog/:id/librarian_view`
 * Export records to refworks and endnote
 * Blacklight::Solr::Document mixins for exporting and transforming MARC data from a stored Solr field
