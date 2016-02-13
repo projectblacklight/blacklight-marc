@@ -17,6 +17,5 @@ test/version_tmp
 tmp
 lib/solrmarc.log
 lib/solrmarc.log.*
-spec/internal
-jetty
 .internal_test_app
+jetty
