@@ -16,7 +16,7 @@ And then execute:
 
 After running the blacklight generator, run the blacklight_marc generator:
 
-    $ rails generate blacklight_marc:marc
+    $ rails generate blacklight:marc:install
 
 The generator will create a model called MarcIndexer. This model can be customized by modifying
 the field configurations in its initializer as a Traject 2 indexer; new indexing behaviors can
