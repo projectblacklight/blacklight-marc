@@ -19,15 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'blacklight', '~> 6.1'
-
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec-rails", '~> 3.0'
-  spec.add_development_dependency "rspec-activemodel-mocks"
-  spec.add_development_dependency "jettywrapper"
-  spec.add_development_dependency "capybara"
-  spec.add_development_dependency "engine_cart", "~> 0.8"
-
   spec.add_dependency "library_stdnums"
   spec.add_dependency "rails"
   # Let's allow future versions of marc, count on
@@ -35,4 +26,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.
   spec.add_dependency "traject", "~>2.1"
   spec.add_dependency 'marc-fastxmlwriter' # NO REXML
+
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec-rails", '~> 3.0'
+  spec.add_development_dependency "rspec-activemodel-mocks"
+  spec.add_development_dependency "solr_wrapper"
+  spec.add_development_dependency "capybara"
+  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "engine_cart", "~> 0.10"
 end
