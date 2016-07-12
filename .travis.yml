@@ -5,18 +5,10 @@ notifications:
   email: false
 
 rvm:
-  - 2.2.4
-
-matrix:
-  include:
-    - rvm: 2.1.8
-      env: "RAILS_VERSION=4.2.5.1"
+  - 2.3.1
 
 before_install:
   - gem install bundler
-
-env:
- - "RAILS_VERSION=4.2.5.1"
 
 notifications:
   irc: "irc.freenode.org#blacklight"
@@ -25,3 +17,5 @@ notifications:
 
 global_env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  
+jdk: oraclejdk8
