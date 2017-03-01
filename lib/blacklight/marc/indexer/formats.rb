@@ -5,7 +5,7 @@ module Blacklight::Marc::Indexer::Formats
       v = v.upcase
       case
       when (v.start_with? 'A')
-        vals << (v == 'AD') ? 'Atlas' : 'Map'
+        vals << (v == 'AD' ? 'Atlas' : 'Map')
       when (v.start_with? 'C')
         case
         when (v == "CA")
