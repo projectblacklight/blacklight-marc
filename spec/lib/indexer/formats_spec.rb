@@ -41,6 +41,14 @@ describe Blacklight::Marc::Indexer::Formats do
       subject.get_format.call(record,val,subject)
       expect(val).to eql(['TapeCartridge'])
     end
+    it 'should map for 007 field with AD value' do
+      record = double('Record')
+      allow(record).to receive(:fields).with(["245", "880"]).and_return([])
+      expect(record).to receive(:fields).with(["007", "880"]).and_return([MARC::ControlField.new('007','AD')])
+      val = []
+      subject.get_format.call(record,val,subject)
+      expect(val).to eql(['Atlas'])
+    end
     it 'should map for leader' do
       record = double('Record')
       allow(record).to receive(:fields).with(["245", "880"]).and_return([])
