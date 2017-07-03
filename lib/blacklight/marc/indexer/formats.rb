@@ -107,7 +107,7 @@ module Blacklight::Marc::Indexer::Formats
       field007hasC
     end
 
-    def self.map_leader(f_000,field007hasC,vals)
+    def self.map_leader(f_000,field007hasC,vals,record)
       f_000 = f_000.upcase
       case
       when (f_000.start_with? 'C')
@@ -139,15 +139,13 @@ module Blacklight::Marc::Indexer::Formats
           vals << ((field007hasC) ? "eBook" : "Book")
         elsif f_000 == 'AS' 
           # Look in 008 to determine what type of Continuing Resource
-          formatCode = extract_marc("008[21]", first: true) do |r,a|
-            format_code = a.upcase
-            if format_code == 'N'
-              vals << 'Newspaper'
-            elsif format_code == 'P'
-              vals << 'Journal'
-            else
-              vals << 'Serial'
-            end
+          format_code = Traject::Macros::Marc21.extract_marc_from(record, "008[21]", first: true, default: "").first.upcase
+          if format_code == 'N'
+            vals << 'Newspaper'
+          elsif format_code == 'P'
+            vals << 'Journal'
+          else
+            vals << 'Serial'
           end
         end
       end
@@ -174,12 +172,12 @@ module Blacklight::Marc::Indexer::Formats
         else
           # check the Leader - this is NOT a repeating field
           # if we find a matching value there, grab it and return.
-          FormatMap.map_leader(record.leader[6,2],field007hasC,vals)
+          FormatMap.map_leader(record.leader[6,2],field007hasC,vals,record)
           unless vals.empty?
             vals.uniq!
             accumulator.concat vals
           else
-            FormatMap.map_leader(record.leader[6],field007hasC,vals)
+            FormatMap.map_leader(record.leader[6],field007hasC,vals,record)
             if vals.empty?
               accumulator.concat ['Unknown']
             else
