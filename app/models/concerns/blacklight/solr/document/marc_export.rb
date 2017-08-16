@@ -104,7 +104,9 @@ module Blacklight::Solr::Document::MarcExport
   # proprietary marc-ish in text/plain format. See
   # http://robotlibrarian.billdueber.com/sending-marcish-data-to-refworks/
   def export_as_refworks_marc_txt
-    fields = to_marc.find_all { |f| ('000'..'999') === f.tag }
+    marc_obj = to_marc
+    return unless marc_obj
+    fields = marc_obj.find_all { |f| ('000'..'999') === f.tag }
     text = "LEADER #{to_marc.leader}"
     fields.each do |field|
     unless ["940","999"].include?(field.tag)
