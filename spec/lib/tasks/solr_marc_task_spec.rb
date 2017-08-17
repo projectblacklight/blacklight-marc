@@ -16,15 +16,15 @@ describe "solr:marc:*" do
     ensure
       $stdout = STDOUT
     end
-    
+
     before(:all) do
-      @rake = Rake::Application.new      
+      @rake = Rake::Application.new
       Rake.application = @rake
       Rake.application.rake_require "../lib/railties/solr_marc"
       Rake::Task.define_task(:environment)
     end
 
-    describe 'solr:marc:index_test_data' do        
+    describe 'solr:marc:index_test_data' do
       it 'should print out usage using NOOP=true' do
         root = Rails.root
         ENV['NOOP'] = "true"
@@ -33,9 +33,9 @@ describe "solr:marc:*" do
         end
 
         expect(o).to match(Regexp.escape("Possible environment variables, with settings as invoked"))
-      end    
+      end
     end
-    
+
     describe "solr:marc:index" do
       after do
         SolrMarc.indexer= nil
@@ -50,7 +50,7 @@ describe "solr:marc:*" do
           @rake['solr:marc:index:work'].invoke
         end
       end
-      
-    end  
+
+    end
   end
 

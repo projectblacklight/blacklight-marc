@@ -36,15 +36,15 @@ EOF
     def add_marc_extension_to_solrdocument
 
       insert_into_file "app/models/solr_document.rb", :after => "include Blacklight::Solr::Document" do <<EOF
-    
+
       # The following shows how to setup this blacklight document to display marc documents
   extension_parameters[:marc_source_field] = :marc_display
   extension_parameters[:marc_format_type] = :marcxml
   use_extension( Blacklight::Solr::Document::Marc) do |document|
     document.key?( :marc_display  )
   end
-  
-  field_semantics.merge!(    
+
+  field_semantics.merge!(
                          :title => "title_display",
                          :author => "author_display",
                          :language => "language_facet",
@@ -56,7 +56,7 @@ EOF
     end
 
     # Add MARC behaviors to the catalog controller
-  def inject_blacklight_controller_behavior    
+  def inject_blacklight_controller_behavior
     inject_into_file "app/controllers/catalog_controller.rb", after:"include Blacklight::Catalog" do
       "\n  include Blacklight::Marc::Catalog\n"
     end

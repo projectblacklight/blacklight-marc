@@ -18,7 +18,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
     to_field "text", extract_all_marc_values do |r, acc|
       acc.replace [acc.join(' ')] # turn it into a single string
     end
-     
+
     to_field "language_facet", marc_languages("008[35-37]:041a:041d:")
     to_field "format", get_format
     to_field "isbn_t",  extract_marc('020a', :separator=>nil) do |rec, acc|
@@ -28,24 +28,24 @@ class MarcIndexer < Blacklight::Marc::Indexer
          acc.flatten!
          acc.uniq!
     end
-     
+
     to_field 'material_type_display', extract_marc('300a', :trim_punctuation => true)
-     
+
     # Title fields
-    #    primary title 
-     
+    #    primary title
+
     to_field 'title_t', extract_marc('245a')
     to_field 'title_display', extract_marc('245a', :trim_punctuation => true, :alternate_script=>false)
     to_field 'title_vern_display', extract_marc('245a', :trim_punctuation => true, :alternate_script=>:only)
-     
+
     #    subtitle
-     
+
     to_field 'subtitle_t', extract_marc('245b')
     to_field 'subtitle_display', extract_marc('245b', :trim_punctuation => true, :alternate_script=>false)
     to_field 'subtitle_vern_display', extract_marc('245b', :trim_punctuation => true, :alternate_script=>:only)
-     
+
     #    additional title fields
-    to_field 'title_addl_t', 
+    to_field 'title_addl_t',
       extract_marc(%W{
         245abnps
         130#{ATOZ}
@@ -57,7 +57,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
         246abcdefgnp
         247abcdefgnp
       }.join(':'))
-     
+
     to_field 'title_added_entry_t', extract_marc(%W{
       700gklmnoprst
       710fgklmnopqrst
@@ -65,21 +65,21 @@ class MarcIndexer < Blacklight::Marc::Indexer
       730abcdefgklmnopqrst
       740anp
     }.join(':'))
-     
+
     to_field 'title_series_t', extract_marc("440anpv:490av")
-     
-    to_field 'title_sort', marc_sortable_title  
-     
+
+    to_field 'title_sort', marc_sortable_title
+
     # Author fields
-     
+
     to_field 'author_t', extract_marc("100abcegqu:110abcdegnu:111acdegjnqu")
     to_field 'author_addl_t', extract_marc("700abcegqu:710abcdegnu:711acdegjnqu")
     to_field 'author_display', extract_marc("100abcdq:110#{ATOZ}:111#{ATOZ}", :alternate_script=>false)
     to_field 'author_vern_display', extract_marc("100abcdq:110#{ATOZ}:111#{ATOZ}", :alternate_script=>:only)
-     
+
     # JSTOR isn't an author. Try to not use it as one
     to_field 'author_sort', marc_sortable_author
-     
+
     # Subject fields
     to_field 'subject_t', extract_marc(%W(
       600#{ATOU}
@@ -94,12 +94,12 @@ class MarcIndexer < Blacklight::Marc::Indexer
     to_field 'subject_topic_facet', extract_marc("600abcdq:610ab:611ab:630aa:650aa:653aa:654ab:655ab", :trim_punctuation => true)
     to_field 'subject_era_facet',  extract_marc("650y:651y:654y:655y", :trim_punctuation => true)
     to_field 'subject_geo_facet',  extract_marc("651a:650z",:trim_punctuation => true )
-     
+
     # Publication fields
     to_field 'published_display', extract_marc('260a', :trim_punctuation => true, :alternate_script=>false)
     to_field 'published_vern_display', extract_marc('260a', :trim_punctuation => true, :alternate_script=>:only)
     to_field 'pub_date', marc_publication_date
-     
+
     # Call Number fields
     to_field 'lc_callnum_display', extract_marc('050ab', :first => true)
     to_field 'lc_1letter_facet', extract_marc('050ab', :first=>true, :translation_map=>'callnumber_map') do |rec, acc|
@@ -116,11 +116,11 @@ class MarcIndexer < Blacklight::Marc::Indexer
     end
 
     to_field 'lc_b4cutter_facet', extract_marc('050a', :first=>true)
-     
+
     # URL Fields
-     
+
     notfulltext = /abstract|description|sample text|table of contents|/i
-     
+
     to_field('url_fulltext_display') do |rec, acc|
       rec.fields('856').each do |f|
         case f.indicator2

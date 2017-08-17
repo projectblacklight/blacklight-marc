@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-def marc_from_xml(string)    
+def marc_from_xml(string)
   reader = MARC::XMLReader.new(StringIO.new(string))
   reader.each {|rec| return rec }
 end
-  
+
 
 def standard_citation
 "<record>
@@ -110,7 +110,7 @@ def utf8_decomposed_record_xml
  "<record>
     <leader>01341nam  2200301 a 450 </leader>
     <controlfield tag=\"005\">19971120234400.0</controlfield>
-    <controlfield tag=\"008\">890316s1988    caua     b    101 0 eng  </controlfield>    
+    <controlfield tag=\"008\">890316s1988    caua     b    101 0 eng  </controlfield>
     <datafield tag=\"245\" ind1=\"0\" ind2=\"0\">
       <subfield code=\"a\">Sharīʻat and ambiguity in South Asian Islam /</subfield>
       <subfield code=\"c\">edited by Katherine P. Ewing.</subfield>
@@ -188,7 +188,7 @@ def year_range_xml
        <subfield code=\"b\">Batsford,</subfield>
        <subfield code=\"c\">1988-2000</subfield>
      </datafield>
-     
+
   </record>"
 end
 
@@ -213,7 +213,7 @@ def no_date_xml
        <subfield code=\"b\">Batsford,</subfield>
        <subfield code=\"c\">n.d.</subfield>
      </datafield>
-     
+
   </record>"
 end
 
@@ -240,7 +240,7 @@ def section_title_xml
        <subfield code=\"b\">Batsford,</subfield>
        <subfield code=\"c\">2001</subfield>
      </datafield>
-     
+
   </record>"
 end
 
@@ -256,7 +256,7 @@ def dissertation_note_xml
   <datafield tag=\"260\" ind1=\" \" ind2=\" \">
     <subfield code=\"c\">2009</subfield>
   </datafield>
-  
+
   <datafield tag=\"502\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Phd Thesis -- Goodenough College, 2009</subfield>
   </datafield>
@@ -267,11 +267,11 @@ def special_contributor_with_author_xml
 "<record>
   <leader>00903nam a2200253   4500</leader>
   <controlfield tag=\"008\">730111s1971    ohu      b    000 0 eng  </controlfield>
-  
+
   <datafield tag=\"100\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Doe, John</subfield>
   </datafield>
-  
+
   <datafield tag=\"245\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Title of item.</subfield>
   </datafield>
@@ -281,22 +281,22 @@ def special_contributor_with_author_xml
     <subfield code=\"b\">Place</subfield>
     <subfield code=\"c\">2009</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Joe</subfield>
     <subfield code=\"e\">trl.</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Bill</subfield>
     <subfield code=\"4\">edt</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Susie</subfield>
     <subfield code=\"e\">com.</subfield>
   </datafield>
-  
+
 </record>"
 end
 
@@ -304,11 +304,11 @@ def three_authors_xml
 "<record>
   <leader>00903nam a2200253   4500</leader>
   <controlfield tag=\"008\">730111s1971    ohu      b    000 0 eng  </controlfield>
-  
+
   <datafield tag=\"100\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Doe, John</subfield>
   </datafield>
-  
+
   <datafield tag=\"245\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Title of item.</subfield>
   </datafield>
@@ -318,15 +318,15 @@ def three_authors_xml
     <subfield code=\"b\">Place</subfield>
     <subfield code=\"c\">2009</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Joe</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Bill</subfield>
   </datafield>
-  
+
 </record>"
 end
 
@@ -334,7 +334,7 @@ def special_contributor_no_author_xml
 "<record>
   <leader>00903nam a2200253   4500</leader>
   <controlfield tag=\"008\">730111s1971    ohu      b    000 0 eng  </controlfield>
-  
+
   <datafield tag=\"245\" ind1=\"0\" ind2=\"0\">
     <subfield code=\"a\">Title of item.</subfield>
   </datafield>
@@ -344,22 +344,22 @@ def special_contributor_no_author_xml
     <subfield code=\"b\">Place</subfield>
     <subfield code=\"c\">2009</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Joe</subfield>
     <subfield code=\"e\">trl.</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Bill</subfield>
     <subfield code=\"4\">edt</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\" \" ind2=\" \">
     <subfield code=\"a\">Schmoe, Susie</subfield>
     <subfield code=\"e\">com.</subfield>
   </datafield>
-  
+
 </record>"
 end
 
@@ -422,23 +422,23 @@ def record3_xml
     <subfield code=\"m\">horn, piano,</subfield>
     <subfield code=\"r\">F major.</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\"1\" ind2=\"2\">
     <subfield code=\"a\">Doe, John</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\"1\" ind2=\"2\">
     <subfield code=\"a\">Doe, Jane</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\"1\" ind2=\"2\">
     <subfield code=\"a\">Smith, John</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\"1\" ind2=\"2\">
     <subfield code=\"a\">Smith, Jane</subfield>
   </datafield>
-  
+
   <datafield tag=\"700\" ind1=\"1\" ind2=\"2\">
     <subfield code=\"a\">Smith, James</subfield>
   </datafield>
@@ -453,7 +453,7 @@ def no_good_data_xml
   <controlfield tag=\"003\">SIRSI</controlfield>
   <controlfield tag=\"007\">sd fungnnmmned</controlfield>
   <controlfield tag=\"008\">020117p20011990xxuzz    h              d</controlfield>
-  
+
   <datafield tag=\"024\" ind1=\"1\" ind2=\" \">
     <subfield code=\"a\">713746703721</subfield>
   </datafield>
@@ -514,7 +514,7 @@ def bad_author_xml
 end
 
 describe Blacklight::Solr::Document::MarcExport do
-  
+
   before(:all) do
     dclass = Class.new do
       include Blacklight::Solr::Document::MarcExport
@@ -541,7 +541,7 @@ describe Blacklight::Solr::Document::MarcExport do
     @record_utf8_decomposed             = dclass.new( utf8_decomposed_record_xml )
 
   end
-  
+
   describe "export_as_chicago_citation_txt" do
     it "should handle a typical record correclty" do
       expect(@typical_record.export_as_chicago_citation_txt).to eq("Ferree, David C., and I. J Warrington. <i>Apples: Botany, Production, and Uses.</i> Oxon, U.K.: CABI Pub., 2003.")
@@ -583,20 +583,20 @@ describe Blacklight::Solr::Document::MarcExport do
       expect(@record_without_citable_data.export_as_chicago_citation_txt).to eq("")
     end
   end
-  
+
   describe "export_as_apa_citation_txt" do
     it "should format a standard citation correctly" do
       expect(@typical_record.export_as_apa_citation_txt).to eq("Ferree, D. C, &amp; Warrington, I. J. (2003). <i>Apples : botany, production, and uses.</i> Oxon, U.K.: CABI Pub.")
     end
-    
+
     it "should format a citation without a 245b field correctly" do
       expect(@record_without_245b.export_as_apa_citation_txt).to eq("Janetzky, K., &amp; Brüchle, B. (1988). <i>The horn.</i> London: Batsford.")
     end
-    
+
     it "should format a citation without any authors correctly" do
       expect(@record_without_authors.export_as_apa_citation_txt).to eq("(1971). <i>Final report to the Honorable John J. Gilligan, Governor.</i> [Columbus: Printed by the State of Ohio, Dept. of Urban Affairs.")
     end
-    
+
     it "should not fail if there is no citation data" do
       expect(@record_without_citable_data.export_as_apa_citation_txt).to eq("")
     end
@@ -604,31 +604,31 @@ describe Blacklight::Solr::Document::MarcExport do
     it "should not bomb with a null pointer if there if author data is empty" do
       expect(@record_with_bad_author.export_as_apa_citation_txt).to eq("Brüchle, B. (1988). <i>The horn.</i> London: Batsford.")
     end
-    
+
   end
-  
+
   describe "export_as_mla_citation_txt" do
     it "should format a standard citation correctly" do
       expect(@typical_record.export_as_mla_citation_txt).to eq("Ferree, David C, and I. J Warrington. <i>Apples : Botany, Production, and Uses.</i> Oxon, U.K.: CABI Pub., 2003.")
     end
-    
+
     it "should format a citation without a 245b field correctly" do
       expect(@record_without_245b.export_as_mla_citation_txt).to eq("Janetzky, Kurt, and Bernhard Brüchle. <i>The Horn.</i> London: Batsford, 1988.")
     end
-    
+
     it "should format a citation without any authors correctly" do
       expect(@record_without_authors.export_as_mla_citation_txt).to eq("<i>Final Report to the Honorable John J. Gilligan, Governor.</i> [Columbus: Printed by the State of Ohio, Dept. of Urban Affairs, 1971.")
     end
-    
+
     it "should format a citation with 4+ authors correctly" do
       expect(@record_with_10plus_authors.export_as_mla_citation_txt).to eq("Greer, Lowell, et al. <i>Music for Horn.</i> [United States]: Harmonia Mundi USA, 2001.")
     end
-    
+
     it "should not fail if there is no citation data" do
-      expect(@record_without_citable_data.export_as_mla_citation_txt).to eq("")      
+      expect(@record_without_citable_data.export_as_mla_citation_txt).to eq("")
     end
   end
-  
+
   describe "export_as_openurl_ctx_kev" do
     it "should create the appropriate context object for books" do
       record = @typical_record.export_as_openurl_ctx_kev('Book')
@@ -673,7 +673,7 @@ describe Blacklight::Solr::Document::MarcExport do
       expect(@music_record.export_as_refworks_marc_txt).to eq("LEADER 01828cjm a2200409 a 4500001    a4768316\n003    SIRSI\n007    sd fungnnmmned\n008    020117p20011990xxuzz    h              d\n245 00 Music for horn |h[sound recording] / |cBrahms, Beethoven, von Krufft.\n260    [United States] : |bHarmonia Mundi USA, |cp2001.\n700 1  Greer, Lowell.\n700 1  Lubin, Steven.\n700 1  Chase, Stephanie, |d1957-\n700 12 Brahms, Johannes, |d1833-1897. |tTrios, |mpiano, violin, horn, |nop. 40, |rE? major.\n700 12 Beethoven, Ludwig van, |d1770-1827. |tSonatas, |mhorn, piano, |nop. 17, |rF major.\n700 12 Krufft, Nikolaus von, |d1779-1818. |tSonata, |mhorn, piano, |rF major.\n")
     end
     describe "for UTF-8 record" do
-      it "should export in Unicode normalized C form" do        
+      it "should export in Unicode normalized C form" do
         @utf8_exported = @record_utf8_decomposed.export_as_refworks_marc_txt
 
         if defined? Unicode
@@ -702,12 +702,12 @@ describe Blacklight::Solr::Document::MarcExport do
       expect(endnote_entries["T"]).to eq(Set.new(["Music for horn "]))
 
       #nothing extra
-      expect(Set.new(endnote_entries.keys)).to eq(Set.new(["0", "C", "D", "E", "I", "T"]))      
+      expect(Set.new(endnote_entries.keys)).to eq(Set.new(["0", "C", "D", "E", "I", "T"]))
     end
   end
 
   describe "Citation title transformation" do
-    before(:each) do 
+    before(:each) do
       class CitationTitleTest
         include Blacklight::Solr::Document::MarcExport
         def transform_title(text)

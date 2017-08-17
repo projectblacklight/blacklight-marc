@@ -567,5 +567,4 @@ module Blacklight::Solr::Document::MarcExport
     temp_name = name.split(", ")
     return temp_name.last + " " + temp_name.first
   end
-
 end
