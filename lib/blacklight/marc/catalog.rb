@@ -9,8 +9,8 @@ module Blacklight::Marc
     end
 
     def librarian_view
-      @response, @document = search_service.fetch params[:id]
-
+      @response, deprecated_document = search_service.fetch params[:id]
+      @document = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document, "The @document instance variable is deprecated and will be removed in Blacklight-marc 8.0")
       respond_to do |format|
         format.html
         format.js { render :layout => false }
@@ -19,7 +19,9 @@ module Blacklight::Marc
 
     # grabs a bunch of documents to export to endnote
     def endnote
-      @response, @documents = search_service.fetch(Array(params[:id]))
+      @response, deprecated_document_list = search_service.fetch(Array(params[:id]))
+      @documents = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document_list, "The @documents instance variable is deprecated and will be removed in Blacklight-marc 8.0")
+      
       respond_to do |format|
         format.endnote { render :layout => false }
       end
