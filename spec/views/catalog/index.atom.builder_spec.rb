@@ -15,7 +15,8 @@ describe "catalog/index" do
 
     # run a solr query to get our data
     service = CatalogController.search_service_class.new(@config, @params)
-    @response, @document_list = service.search_results
+    @response, _ = service.search_results
+    @document_list = @response.documents
 
     # munge the solr response to match test expectations
     @document_list[1] = SolrDocument.new(@document_list[1].to_h.with_indifferent_access.reject! { |k,v| k == "author_display" })
