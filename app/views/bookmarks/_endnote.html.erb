@@ -1,4 +1,4 @@
-<% if @document_list.any? {|d| d.exports_as? :endnote } %>
+<% if @response.documents.any? {|d| d.exports_as? :endnote } %>
   <li class="endnote">
     <%= link_to t('blacklight.tools.endnote'), bookmarks_path(:endnote, search_state.params_for_search), :class => "btn btn-default", :id => "endnoteLink" %>
   </li>

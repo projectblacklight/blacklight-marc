@@ -4,13 +4,13 @@
 # it for your own custom Blacklight document Marc extension too -- just
 # include this module in any document extension (or any other class)
 # that provides a #to_marc returning a ruby-marc object.  This module will add
-# in export_as translation methods for a variety of formats. 
+# in export_as translation methods for a variety of formats.
 module Blacklight::Solr::Document::MarcExport
-  
+
   def self.register_export_formats(document)
     document.will_export_as(:xml)
     document.will_export_as(:marc, "application/marc")
-    # marcxml content type: 
+    # marcxml content type:
     # http://tools.ietf.org/html/draft-denenberg-mods-etc-media-types-00
     document.will_export_as(:marcxml, "application/marcxml+xml")
     document.will_export_as(:openurl_ctx_kev, "application/x-openurl-ctx-kev")
@@ -27,20 +27,20 @@ module Blacklight::Solr::Document::MarcExport
     to_marc.to_xml.to_s
   end
   alias_method :export_as_xml, :export_as_marcxml
-  
-  
+
+
   # TODO This exporting as formatted citation thing should be re-thought
   # redesigned at some point to be more general purpose, but this
   # is in-line with what we had before, but at least now attached
-  # to the document extension where it belongs. 
+  # to the document extension where it belongs.
   def export_as_apa_citation_txt
     apa_citation( to_marc )
   end
-  
+
   def export_as_mla_citation_txt
     mla_citation( to_marc )
   end
-  
+
   def export_as_chicago_citation_txt
     chicago_citation( to_marc )
   end
@@ -52,8 +52,8 @@ module Blacklight::Solr::Document::MarcExport
   # more sensibly. The "format" argument was in the old marc.marc.to_zotero
   # call, but didn't neccesarily do what it thought it did anyway. Left in
   # for now for backwards compatibilty, but should be replaced by
-  # just ruby OpenURL. 
-  def export_as_openurl_ctx_kev(format = nil)  
+  # just ruby OpenURL.
+  def export_as_openurl_ctx_kev(format = nil)
     title = to_marc.find{|field| field.tag == '245'}
     author = to_marc.find{|field| field.tag == '100'}
     corp_author = to_marc.find{|field| field.tag == '110'}
@@ -100,11 +100,13 @@ module Blacklight::Solr::Document::MarcExport
 
   # This format used to be called 'refworks', which wasn't really
   # accurate, sounds more like 'refworks tagged format'. Which this
-  # is not, it's instead some weird under-documented Refworks 
+  # is not, it's instead some weird under-documented Refworks
   # proprietary marc-ish in text/plain format. See
   # http://robotlibrarian.billdueber.com/sending-marcish-data-to-refworks/
   def export_as_refworks_marc_txt
-    fields = to_marc.find_all { |f| ('000'..'999') === f.tag }
+    marc_obj = to_marc
+    return unless marc_obj
+    fields = marc_obj.find_all { |f| ('000'..'999') === f.tag }
     text = "LEADER #{to_marc.leader}"
     fields.each do |field|
     unless ["940","999"].include?(field.tag)
@@ -125,9 +127,9 @@ module Blacklight::Solr::Document::MarcExport
     # it seems to want C form normalization, although RefWorks support
     # couldn't tell me that. -jrochkind
     text = ActiveSupport::Multibyte::Unicode.normalize(text, :c)
-    
+
     return text
-  end 
+  end
 
   # Endnote Import Format. See the EndNote User Guide at:
   # http://www.endnote.com/support/enx3man-terms-win.asp
@@ -138,7 +140,7 @@ module Blacklight::Solr::Document::MarcExport
   # endnote import format; the %0 is likely to be entirely illegal, the
   # rest of the data is barely correct but messy. TODO, a new version of this,
   # or better yet just an export_as_ris instead, which will be more general
-  # purpose. 
+  # purpose.
   def export_as_endnote()
     end_note_format = {
       "%A" => "100.a",
@@ -154,10 +156,12 @@ module Blacklight::Solr::Document::MarcExport
       "%7" => "250.a"
     }
     marc_obj = to_marc
+    return unless marc_obj
+
     # TODO. This should be rewritten to guess
     # from actual Marc instead, probably.
     format_str = 'Generic'
-    
+
     text = ''
     text << "%0 #{ format_str }\n"
     # If there is some reliable way of getting the language of a record we can add it here
@@ -170,7 +174,7 @@ module Blacklight::Solr::Document::MarcExport
       else
         second_value = []
       end
-      
+
       if marc_obj[first_value[0].to_s]
         marc_obj.find_all{|f| (first_value[0].to_s) === f.tag}.each do |field|
           if field[first_value[1]].to_s or field[second_value[1]].to_s
@@ -190,11 +194,11 @@ module Blacklight::Solr::Document::MarcExport
   end
 
   protected
-  
+
   # Main method for defining chicago style citation.  If we don't end up converting to using a citation formatting service
   # we should make this receive a semantic document and not MARC so we can use this with other formats.
   def chicago_citation(marc)
-    authors = get_all_authors(marc)    
+    authors = get_all_authors(marc)
     author_text = ""
     unless authors[:primary_authors].blank?
       if authors[:primary_authors].length > 10
@@ -226,7 +230,7 @@ module Blacklight::Solr::Document::MarcExport
             author_text << "and #{name_reverse(author)}."
           else
             author_text << "#{name_reverse(author)}, "
-          end 
+          end
         end
       else
         author_text << authors[:primary_authors].first
@@ -242,7 +246,7 @@ module Blacklight::Solr::Document::MarcExport
       authors[:compilers].each do |compiler|
         temp_authors << [compiler, "comp."]
       end
-      
+
       unless temp_authors.blank?
         if temp_authors.length > 10
           temp_authors.each_with_index do |author,index|
@@ -281,18 +285,18 @@ module Blacklight::Solr::Document::MarcExport
         section_title << "."
       end
     end
-    
+
     if !authors[:primary_authors].blank? and (!authors[:translators].blank? or !authors[:editors].blank? or !authors[:compilers].blank?)
         additional_title << "Translated by #{authors[:translators].collect{|name| name_reverse(name)}.join(" and ")}. " unless authors[:translators].blank?
         additional_title << "Edited by #{authors[:editors].collect{|name| name_reverse(name)}.join(" and ")}. " unless authors[:editors].blank?
         additional_title << "Compiled by #{authors[:compilers].collect{|name| name_reverse(name)}.join(" and ")}. " unless authors[:compilers].blank?
     end
-    
+
     edition = ""
     edition << setup_edition(marc) unless setup_edition(marc).nil?
-    
+
     pub_info = ""
-    if marc["260"] and (marc["260"]["a"] or marc["260"]["b"]) 
+    if marc["260"] and (marc["260"]["a"] or marc["260"]["b"])
       pub_info << clean_end_punctuation(marc["260"]["a"]).strip if marc["260"]["a"]
       pub_info << ": #{clean_end_punctuation(marc["260"]["b"]).strip}" if marc["260"]["b"]
       pub_info << ", #{setup_pub_date(marc)}" if marc["260"]["c"]
@@ -301,7 +305,7 @@ module Blacklight::Solr::Document::MarcExport
     elsif marc["502"] and (marc["502"]["b"] or marc["502"]["c"] or marc["502"]["d"]) #sometimes the dissertation note is encoded in pieces in the $b $c and $d sub fields instead of lumped into the $a
       pub_info << "#{marc["502"]["b"]}, #{marc["502"]["c"]}, #{clean_end_punctuation(marc["502"]["d"])}"
     end
-    
+
     citation = ""
     citation << "#{author_text} " unless author_text.blank?
     citation << "<i>#{title}.</i> " unless title.blank?
@@ -311,13 +315,13 @@ module Blacklight::Solr::Document::MarcExport
     citation << "#{pub_info}." unless pub_info.blank?
     citation
   end
-  
-  
-  
+
+
+
   def mla_citation(record)
     text = ''
     authors_final = []
-    
+
     #setup formatted author list
     authors = get_author_list(record)
 
@@ -351,10 +355,10 @@ module Blacklight::Solr::Document::MarcExport
     # Edition
     edition_data = setup_edition(record)
     text += edition_data + " " unless edition_data.nil?
-    
+
     # Publication
     text += setup_pub_info(record) + ", " unless setup_pub_info(record).nil?
-    
+
     # Get Pub Date
     text += setup_pub_date(record) unless setup_pub_date(record).nil?
     if text[-1,1] != "."
@@ -367,7 +371,7 @@ module Blacklight::Solr::Document::MarcExport
     text = ''
     authors_list = []
     authors_list_final = []
-    
+
     #setup formatted author list
     authors = get_author_list(record)
     authors.each do |l|
@@ -392,15 +396,15 @@ module Blacklight::Solr::Document::MarcExport
     end
     # Get Pub Date
     text += "(" + setup_pub_date(record) + "). " unless setup_pub_date(record).nil?
-    
+
     # setup title info
     title = setup_title_info(record)
     text += "<i>" + title + "</i> " unless title.nil?
-    
+
     # Edition
     edition_data = setup_edition(record)
     text += edition_data + " " unless edition_data.nil?
-    
+
     # Publisher info
     text += setup_pub_info(record) unless setup_pub_info(record).nil?
     unless text.blank?
@@ -451,7 +455,7 @@ module Blacklight::Solr::Document::MarcExport
     end
     new_text.join(" ")
   end
-  
+
   # This will replace the mla_citation_title method with a better understanding of how MLA and Chicago citation titles are formatted.
   # This method will take in a string and capitalize all of the non-prepositions.
   def citation_title(title_text)
@@ -482,18 +486,18 @@ module Blacklight::Solr::Document::MarcExport
       end
       text += b_title_info unless b_title_info.nil?
     end
-    
+
     return nil if text.strip.blank?
     clean_end_punctuation(text.strip) + "."
-    
+
   end
-  
+
   def clean_end_punctuation(text)
     if [".",",",":",";","/"].include? text[-1,1]
       return text[0,text.length-1]
     end
     text
-  end  
+  end
 
   def setup_edition(record)
     edition_field = record.find{|f| f.tag == '250'}
@@ -503,9 +507,9 @@ module Blacklight::Solr::Document::MarcExport
       return nil
     else
       return edition_data
-    end    
+    end
   end
-  
+
   def get_author_list(record)
     author_list = []
     authors_primary = record.find{|f| f.tag == '100'}
@@ -517,11 +521,11 @@ module Blacklight::Solr::Document::MarcExport
         author_list.push(clean_end_punctuation(l.find{|s| s.code == 'a'}.value)) unless l.find{|s| s.code == 'a'}.value.nil?
       end
     end
-    
+
     author_list.uniq!
     author_list
   end
-  
+
   # This is a replacement method for the get_author_list method.  This new method will break authors out into primary authors, translators, editors, and compilers
   def get_all_authors(record)
     translator_code = "trl"; editor_code = "edt"; compiler_code = "com"
@@ -547,7 +551,7 @@ module Blacklight::Solr::Document::MarcExport
     end
     {:primary_authors => primary_authors, :translators => translators, :editors => editors, :compilers => compilers}
   end
-  
+
   def abbreviate_name(name)
     name_parts = name.split(", ")
     first_name_parts = name_parts.last.split(" ")
@@ -562,6 +566,6 @@ module Blacklight::Solr::Document::MarcExport
     return name unless name =~ /,/
     temp_name = name.split(", ")
     return temp_name.last + " " + temp_name.first
-  end 
-  
+  end
+
 end

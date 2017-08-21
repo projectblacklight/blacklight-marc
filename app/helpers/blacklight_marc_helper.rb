@@ -33,7 +33,8 @@ module BlacklightMarcHelper
     val = ''
     documents.each do |doc|
       if doc.exports_as? :endnote
-        val += doc.export_as(:endnote) + "\n"
+        endnote = doc.export_as(:endnote)
+        val += "#{endnote}\n" if endnote
       end
     end
     val
