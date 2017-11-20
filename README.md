@@ -4,6 +4,12 @@
 
 MARC-specific enhancements for [Blacklight](https://github.com/projectblacklight/blacklight)
 
+## Features
+* Rake task `solr:marc:index` to import .mrc files using Traject and app/models/marc_indexer
+* "Librarian View" at `catalog/:id/librarian_view`
+* Export records to refworks and endnote
+* Blacklight::Solr::Document mixins for exporting and transforming MARC data from a stored Solr field
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,6 +24,27 @@ After running the blacklight generator, run the blacklight_marc generator:
 
     $ rails generate blacklight:marc:install
 
+
+## How does it work?
+This generator injects an include into CatalogController (parent class of BookmarksController):
+
+```ruby
+include Blacklight::Marc::Catalog
+```
+
+and the following code is generated into SolrDocument:
+
+```ruby
+use_extension( Blacklight::Solr::Document::Marc) do |document|
+  document.key?( :marc_display  )
+end
+```
+
+This means, the extension will be applied on the instance if the backing hash
+has a field called `marc_display`.
+
+
+## Indexing
 The generator will create a model called MarcIndexer. This model can be customized by modifying
 the field configurations in its initializer as a Traject 2 indexer; new indexing behaviors can
 be added to it via mixins or inline methods. Two example mixins are provided:
@@ -35,12 +62,6 @@ MarcIndexer
   end
 end
 ```
-## Features
-* Rake task `solr:marc:index` to import .mrc files using Traject and app/models/marc_indexer
-* Librarian view at `catalog/:id/librarian_view`
-* Export records to refworks and endnote
-* Blacklight::Solr::Document mixins for exporting and transforming MARC data from a stored Solr field
-
 
 ## Documentation, Information and Support
 
