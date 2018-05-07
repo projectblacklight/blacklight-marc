@@ -11,7 +11,7 @@ class TestAppGenerator < Rails::Generators::Base
   def install_blacklight
     say_status("warning", "GENERATING BL", :yellow)
     Bundler.with_clean_env do
-      run "bundle install"
+      run "bundle install --no-deployment"
     end
 
     generate 'blacklight:install', '--devise'
