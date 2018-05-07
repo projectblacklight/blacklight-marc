@@ -1,43 +1,41 @@
 require 'spec_helper'
 require 'rexml/document'
 
-describe "catalog/index" do  
-
+describe "catalog/index" do
   before(:all) do
     @config = Blacklight::Configuration.new.configure do |config|
       config.default_solr_params = {
-        :fl => '*',
-        :rows => 10
+        fl: '*',
+        rows: 10
       }
     end
-    
-    @params = { 'content_format' => 'marc', :f => { :format => ['Book'] }, :page => 2 }
+
+    @params = { 'content_format' => 'marc', f: { format: ['Book'] }, page: 2 }
+    service = Blacklight::SearchService.new(::CatalogController.blacklight_config, @params)
 
     # run a solr query to get our data
     c = CatalogController.new
     c.blacklight_config = @config
-    @response, @document_list = c.search_results(@params)
-
-    # munge the solr response to match test expectations
-    @document_list[1] = SolrDocument.new(@document_list[1].with_indifferent_access.reject! { |k,v| k == "author_display" })
-    @document_list[5] = SolrDocument.new(@document_list[1].with_indifferent_access.reject! { |k,v| k == "marc_display" })
+    @user_params = @params
+    @response, @document_list = service.search_results
   end
+
   before(:each) do
     # Not sure what Assigns was doing here ... dhf
     #    assigns[:response] = @rsolr_response
     #    assigns[:document_list] = @document_list
     # not sure why we can't use assigns for 'params', instead this weird way,
-    # but okay. 
+    # but okay.
 
-    params.merge!( @params )
+    params.merge!(@params)
     allow(view).to receive(:blacklight_config).and_return(@config)
     allow(view).to receive(:search_field_options_for_select).and_return([])
 
-    render :template => 'catalog/index', :formats => [:atom] 
+    render template: 'catalog/index', formats: [:atom]
 
-    # We need to use rexml to test certain things that have_tag wont' test    
-    # note that response is depricated rails 3, use "redered" instead. 
-    @response_xml = REXML::Document.new(rendered)   
+    # We need to use rexml to test certain things that have_tag wont' test
+    # note that response is depricated rails 3, use "redered" instead.
+    @response_xml = REXML::Document.new(rendered)
   end
 
   describe "when content_format is specified" do
@@ -54,5 +52,3 @@ describe "catalog/index" do
     end
   end
 end
-
-

@@ -8,7 +8,7 @@ describe CatalogController do
     end
     render_views
     it "should render endnote" do
-      get :endnote, id: '86207417', format: 'endnote'
+      get :endnote, params: { id: '86207417', format: 'endnote' }
       expect(response.body).to eq "%0 Generic
 %A Finkel, Chaim Jacob. 
 %C Yerushalayim : 

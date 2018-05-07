@@ -9,7 +9,8 @@ module Blacklight::Marc
     end
 
     def librarian_view
-      @response, @document = fetch params[:id]
+      deprecated_response, @document = search_service.fetch(params[:id])
+      @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_response, 'The @response instance variable is deprecated; use @document.response instead.')
 
       respond_to do |format|
         format.html
@@ -19,7 +20,8 @@ module Blacklight::Marc
 
     # grabs a bunch of documents to export to endnote
     def endnote
-      @response, @documents = fetch(Array(params[:id]))
+      deprecated_response, @documents = search_service.fetch(Array(params[:id]))
+      @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_response, 'The @response instance variable is deprecated; use @document.response instead.')
       respond_to do |format|
         format.endnote { render :layout => false }
       end
