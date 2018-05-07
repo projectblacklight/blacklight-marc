@@ -15,7 +15,7 @@ PATH
   remote: /Users/dkinzer/blacklight-marc
   specs:
     blacklight-marc (6.2.0)
-      blacklight (> 6.1, < 8.a)
+      blacklight (> 7.0.0.a, < 8.a)
       library_stdnums
       marc (>= 0.4.3, < 1.1)
       marc-fastxmlwriter
