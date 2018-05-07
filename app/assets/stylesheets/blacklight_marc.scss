@@ -22,7 +22,7 @@ $marc_item_separator: 1px solid $text-muted !default;
   .ind1, .ind2
   {
     display:inline;
-    padding:0 5px;
+    padding: 0 ($spacer / 2);
   }
 
   .subfields
@@ -34,9 +34,4 @@ $marc_item_separator: 1px solid $text-muted !default;
   {
     float:left;
   }
-}
-
-/* refworks uses a form; we need to give it some additional padding to make it look like a link */
-#refworks-form .btn {
-  padding: 10px 15px;
 }

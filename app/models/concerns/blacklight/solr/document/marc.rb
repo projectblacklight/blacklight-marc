@@ -6,7 +6,7 @@
 # then provides various transformations/exports of that Marc via the included
 # Blacklight::Solr::Document::MarcExport module.
 #
-# This extension would normally be registered using 
+# This extension would normally be registered using
 # Blacklight::Solr::Document#use_extension.  eg:
 #
 # SolrDocument.use_extension( Blacklight::Solr::Document::Marc ) { |document| my_logic_for_document_has_marc?( document ) }
@@ -20,15 +20,15 @@ require 'marc'
 
 module Blacklight::Solr::Document::Marc
 
-  include Blacklight::Solr::Document::MarcExport # All our export_as stuff based on to_marc. 
-  
+  include Blacklight::Solr::Document::MarcExport # All our export_as stuff based on to_marc.
+
   class UnsupportedMarcFormatType < RuntimeError; end
-    
+
   def self.extended(document)
-    # Register our exportable formats, we inherit these from MarcExport    
+    # Register our exportable formats, we inherit these from MarcExport
     Blacklight::Solr::Document::MarcExport.register_export_formats( document )
   end
-  
+
   # ruby-marc object
   def to_marc
     @_ruby_marc_obj ||= load_marc
@@ -50,29 +50,29 @@ module Blacklight::Solr::Document::Marc
       return MARC::Record.new_from_hash( JSON.parse( fetch(_marc_source_field) ) )
     else
       raise UnsupportedMarcFormatType.new("Only marcxml, marc21, and json are supported, this documents format is #{_marc_format_type} and the current extension parameters are #{self.class.extension_parameters.inspect}")
-    end      
+    end
   rescue Exception => e
     raise e if e.is_a? UnsupportedMarcFormatType
 
     Rails.logger.error("Blacklight failed to parse MARC record. Exception was: #{e}")
   end
-  
+
   def marc_record_from_marcxml
     MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
   end
-  
+
   def _marc_helper
     @_marc_helper ||= (
       Blacklight::Marc::Document.new fetch(_marc_source_field), _marc_format_type )
   end
 
-  def _marc_source_field    
+  def _marc_source_field
     self.class.extension_parameters[:marc_source_field]
   end
 
   def _marc_format_type
         #TODO: Raise if not present
-    self.class.extension_parameters[:marc_format_type]    
+    self.class.extension_parameters[:marc_format_type]
   end
-  
+
 end
