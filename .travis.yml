@@ -5,7 +5,7 @@ notifications:
   email: false
 
 rvm:
-  - 2.3.1
+  - 2.4.3
 
 before_install:
   - gem install bundler
@@ -19,3 +19,6 @@ global_env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   
 jdk: oraclejdk8
+
+env:
+ - "RAILS_VERSION=5.1.6"

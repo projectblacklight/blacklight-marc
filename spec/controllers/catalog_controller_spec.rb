@@ -2,10 +2,10 @@
 require 'spec_helper'
 
 describe CatalogController do
-  before do
-    SolrDocument.use_extension( Blacklight::Solr::Document::Marc )
-  end
   describe "endnote" do
+    before do
+      SolrDocument.use_extension( Blacklight::Solr::Document::Marc )
+    end
     render_views
     it "should render endnote" do
       get :endnote, params: { id: '86207417', format: 'endnote' }
@@ -19,10 +19,5 @@ describe CatalogController do
     end
   end
 
-  describe "#librarian_view" do
-    it "is successful" do
-      get :librarian_view, params: { id: '86207417' }
-      expect(response).to be_success
-    end
-  end
+
 end

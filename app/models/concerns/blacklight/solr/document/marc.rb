@@ -55,7 +55,6 @@ module Blacklight::Solr::Document::Marc
     raise e if e.is_a? UnsupportedMarcFormatType
 
     Rails.logger.error("Blacklight failed to parse MARC record. Exception was: #{e}")
-    nil
   end
 
   def marc_record_from_marcxml
