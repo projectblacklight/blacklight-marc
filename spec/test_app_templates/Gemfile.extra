@@ -1,4 +1,2 @@
-gem "blacklight",
-    git: "https://github.com/projectblacklight/blacklight",
-    ref: "v7.0.0.rc1"
+gem 'blacklight', github: 'projectblacklight/blacklight'
 gem "traject", '~>2.0'
