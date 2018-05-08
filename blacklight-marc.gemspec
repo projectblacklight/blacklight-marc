@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'blacklight', '> 7.0.0.a', '< 8.a'
   spec.add_dependency "library_stdnums"
-  spec.add_dependency "rails", "5.1.6"
+  spec.add_dependency "rails"
 
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1

@@ -21,3 +21,6 @@ global_env:
 jdk: oraclejdk8
 
 script: rake
+
+env:
+ - "RAILS_VERSION=5.1.6"
