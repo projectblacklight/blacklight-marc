@@ -14,7 +14,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
     end
 
     to_field "id", trim(extract_marc("001"), :first => true)
-    to_field 'marc_display', get_xml
+    to_field 'marc_ss', get_xml
     to_field "text", extract_all_marc_values do |r, acc|
       acc.replace [acc.join(' ')] # turn it into a single string
     end

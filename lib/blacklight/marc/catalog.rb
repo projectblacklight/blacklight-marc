@@ -3,14 +3,15 @@ module Blacklight::Marc
     extend ActiveSupport::Concern
 
     included do
-      add_show_tools_partial(:librarian_view, if: :render_librarian_view_control?, define_method: false)
-      add_show_tools_partial(:refworks, if: :render_refworks_action?, modal: false)
-      add_show_tools_partial(:endnote, if: :render_endnote_action?, modal: false, path: :single_endnote_catalog_path, define_method: false)
+      blacklight_config.add_show_tools_partial(:librarian_view, if: :render_librarian_view_control?, define_method: false)
+      blacklight_config.add_show_tools_partial(:refworks, if: :render_refworks_action?, modal: false)
+      blacklight_config.add_show_tools_partial(:endnote, if: :render_endnote_action?, modal: false, path: :single_endnote_catalog_path, define_method: false)
     end
 
     def librarian_view
-      @response, deprecated_document = search_service.fetch params[:id]
-      @document = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document, "The @document instance variable is deprecated and will be removed in Blacklight-marc 8.0")
+      deprecated_response, @document = search_service.fetch(params[:id])
+      @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_response, 'The @response instance variable is deprecated; use @document.response instead.')
+
       respond_to do |format|
         format.html
         format.js { render :layout => false }
@@ -19,9 +20,8 @@ module Blacklight::Marc
 
     # grabs a bunch of documents to export to endnote
     def endnote
-      @response, deprecated_document_list = search_service.fetch(Array(params[:id]))
-      @documents = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document_list, "The @documents instance variable is deprecated and will be removed in Blacklight-marc 8.0")
-      
+      deprecated_response, @documents = search_service.fetch(Array(params[:id]))
+      @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_response, 'The @response instance variable is deprecated; use @document.response instead.')
       respond_to do |format|
         format.endnote { render :layout => false }
       end

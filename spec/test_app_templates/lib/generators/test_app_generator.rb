@@ -1,20 +1,19 @@
 require 'rails/generators'
 
 class TestAppGenerator < Rails::Generators::Base
-  def fix_travis_rails_4
-    if ENV['TRAVIS']
-      insert_into_file 'app/assets/stylesheets/application.css', :before =>'/*' do
-        "@charset \"UTF-8\";\n"
-      end
-    end
-  end
+  source_root File.expand_path('../../../spec/test_app_templates', __dir__)
 
   def remove_index
     remove_file "public/index.html"
+    remove_file 'app/assets/images/rails.png'
   end
 
-  def run_blacklight_generator
+  def install_blacklight
     say_status("warning", "GENERATING BL", :yellow)
+    Bundler.with_clean_env do
+      run "bundle install --no-deployment"
+    end
+
     generate 'blacklight:install', '--devise'
   end
 
@@ -24,7 +23,10 @@ class TestAppGenerator < Rails::Generators::Base
     generate 'blacklight:test_support'
   end
 
-  def run_blacklight_marc_generator
+  def install_engine
+    say_status("warning", "GENERATING BL-MARC", :yellow)
+
     generate 'blacklight:marc:install'
   end
 end
+
