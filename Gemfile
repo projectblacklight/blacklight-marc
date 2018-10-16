@@ -7,9 +7,8 @@ end
 
 # Please see blacklight_marc.gemspec for dependency information.
 gemspec path: File.expand_path('..', __FILE__)
-
 # BEGIN ENGINE_CART BLOCK
-# engine_cart: 1.0.1
+# engine_cart: 2.0.1
 # engine_cart stanza: 0.10.0
 # the below comes from engine_cart, a gem used to test this Rails engine gem in the context of a Rails app.
 file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('.internal_test_app', File.dirname(__FILE__)))

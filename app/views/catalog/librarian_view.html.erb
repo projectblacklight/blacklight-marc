@@ -3,8 +3,8 @@
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
   <h3 class="modal-title"><%= t('blacklight.search.librarian_view.title') %></h3>
 </div>
-<%- if @response.documents.first.respond_to?(:to_marc) -%>
-  <%= render "marc_view", document: @response.documents.first %>
+<%- if @document.respond_to?(:to_marc) -%>
+  <%= render "marc_view" %>
 <%- else %>
   <%= t('blacklight.search.librarian_view.empty') %>
 <%- end -%>
