@@ -102,7 +102,7 @@ module Blacklight::Solr::Document::MarcExport
   # accurate, sounds more like 'refworks tagged format'. Which this
   # is not, it's instead some weird under-documented Refworks
   # proprietary marc-ish in text/plain format. See
-  # http://robotlibrarian.billdueber.com/sending-marcish-data-to-refworks/
+  # http://robotlibrarian.billdueber.com/2009/05/sending-marcish-data-to-refworks/
   def export_as_refworks_marc_txt
     marc_obj = to_marc
     return unless marc_obj
