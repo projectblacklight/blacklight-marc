@@ -28,7 +28,7 @@ describe Blacklight::Marc::Indexer::Formats do
     it 'should map for 245h fields' do
       record = double('Record')
       # just return bytes for control field, subfield array for data
-      expect(record).to receive(:fields).with(['245','880']).and_return([electronic]) 
+      expect(record).to receive(:fields).with(['245','880']).and_return([electronic])
       val = []
       subject.get_format.call(record,val,subject)
       expect(val).to eql(['Electronic'])

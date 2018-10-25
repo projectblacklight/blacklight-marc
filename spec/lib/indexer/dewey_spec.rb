@@ -32,7 +32,7 @@ describe Blacklight::Marc::Indexer::Dewey do
     it 'should map valid dewey' do
       record = double('Record')
       # just return bytes for control field, subfield array for data
-      expect(record).to receive(:fields).with(['082','880']).exactly(2).times.and_return([dewey]) 
+      expect(record).to receive(:fields).with(['082','880']).exactly(2).times.and_return([dewey])
       val = []
       subject.dewey_facets(base: :hundreds, translation_map: 'test_dewey').call(record,val,subject)
       expect(val).to eql(['300s - Social Sciences'])
@@ -43,7 +43,7 @@ describe Blacklight::Marc::Indexer::Dewey do
     it 'should ignore invalid dewey' do
       record = double('Record')
       # just return bytes for control field, subfield array for data
-      expect(record).to receive(:fields).with(['082','880']).exactly(2).times.and_return([huey]) 
+      expect(record).to receive(:fields).with(['082','880']).exactly(2).times.and_return([huey])
       val = []
       subject.dewey_facets(base: :hundreds, translation_map: 'test_dewey').call(record,val,subject)
       expect(val).to eql([])
@@ -59,7 +59,7 @@ describe Blacklight::Marc::Indexer::Dewey do
     it 'should generate formatted, unmapped text' do
       record = double('Record')
       # just return bytes for control field, subfield array for data
-      expect(record).to receive(:fields).with(['082','880']).and_return([dewey]) 
+      expect(record).to receive(:fields).with(['082','880']).and_return([dewey])
       val = []
       subject.dewey_text.call(record,val,subject)
       expect(val).to eql(['343 13'])
@@ -67,7 +67,7 @@ describe Blacklight::Marc::Indexer::Dewey do
     it 'should ignore invalid dewey' do
       record = double('Record')
       # just return bytes for control field, subfield array for data
-      expect(record).to receive(:fields).with(['082','880']).times.and_return([huey]) 
+      expect(record).to receive(:fields).with(['082','880']).times.and_return([huey])
       val = []
       subject.dewey_text.call(record,val,subject)
       expect(val).to eql([])

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   #
   # These routes can be injected into your Rails application by adding
   #     Blacklight.add_routes(self)
-  # to the application's ./config/routes.rb. The injected routes can be 
+  # to the application's ./config/routes.rb. The injected routes can be
   # customized as well, e.g.:
   #     Blacklight.add_routes(self, :only => [:bookmarks]) # will only look bookmark routes
   #     Blacklight.add_routes(self, :except => [:catalog]) # will not load catalog routes

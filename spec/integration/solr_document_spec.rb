@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # WARNING!!!
 # If you set any values in Blacklight here, you must reset them to the original
-# values in an after() block so other tests get expected results. 
+# values in an after() block so other tests get expected results.
 # Blacklight is a Singleton for application configuration.
 
 ## TODO: ALL these specs probably really ought to be on the modules
@@ -24,7 +24,7 @@ def get_hash_with_bad_marcxml
 end
 
   describe SolrDocument do
-    
+
     before(:each) do
       @hash_with_marcxml = get_hash_with_marcxml['response']['docs'][0]
       SolrDocument.extension_parameters[:marc_source_field]  = :marc_display
@@ -35,20 +35,20 @@ end
       # it.
       SolrDocument.registered_extensions = nil
       SolrDocument.use_extension( Blacklight::Solr::Document::Marc ) { |document| document.has_key?(:marc_display)}
-      
+
       @solrdoc = SolrDocument.new(@hash_with_marcxml)
 
     end
 
     describe "ruby marc creation" do
- 
+
       it "should have a valid to_marc" do
         @solrdoc = SolrDocument.new(@hash_with_marcxml)
 
         expect(@solrdoc).to respond_to(:to_marc)
-        expect(@solrdoc.to_marc).to be_kind_of(MARC::Record)        
+        expect(@solrdoc.to_marc).to be_kind_of(MARC::Record)
       end
-      
+
       it "should not try to create marc for objects w/out stored marc (marcxml test only at this time)" do
         @hash_without_marcxml = get_hash_without_marcxml['response']['docs'][0]
         @solrdoc_without_marc = SolrDocument.new(@hash_without_marcxml)
@@ -64,5 +64,5 @@ end
         expect(@solrdoc.to_marc).to be_nil
       end
 
-    end 
+    end
 end
