@@ -6,11 +6,5 @@ describe "Routing" do
       expect({ :get => "/catalog/111/librarian_view" }).to route_to(:controller => 'catalog', :action => 'librarian_view', :id => "111")
       expect({ :get => librarian_view_solr_document_path('111') }).to route_to(:controller => 'catalog', :action => 'librarian_view', :id => "111")
     end
-    it "should map {:controller => 'catalog', :action => 'endnote'} to /catalog/endnote" do
-      expect({ :get => "/catalog/endnote" }).to route_to(:controller => 'catalog', :action => 'endnote')
-      expect({ :get => endnote_solr_document_path }).to route_to(:controller => 'catalog', :action => 'endnote')
-    end
   end
 end
-
-
