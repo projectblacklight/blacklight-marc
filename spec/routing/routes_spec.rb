@@ -8,7 +8,7 @@ describe "Routing" do
     end
     it "should map {:controller => 'catalog', :action => 'endnote'} to /catalog/endnote" do
       expect({ :get => "/catalog/endnote" }).to route_to(:controller => 'catalog', :action => 'endnote')
-      expect({ :get => endnote_solr_document_path }).to route_to(:controller => 'catalog', :action => 'endnote')
+      expect({ :get => endnote_catalog_path }).to route_to(:controller => 'catalog', :action => 'endnote')
     end
   end
 end

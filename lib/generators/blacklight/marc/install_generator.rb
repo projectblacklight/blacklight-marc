@@ -64,7 +64,19 @@ EOF
 
 
   def inject_blacklight_marc_routes
-    route('Blacklight::Marc.add_routes(self)')
+    route <<-EOF
+    concern :endnotable, Blacklight::Marc::Routes::Endnotable.new
+    concern :marc_viewable, Blacklight::Marc::Routes::MarcViewable.new
+    EOF
+
+    inject_into_file "config/routes.rb", after: "resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do" do
+      "\n    concerns [:exportable, :marc_viewable]\nINJECT_FLAG"
+    end
+    gsub_file "config/routes.rb", /[\n]INJECT_FLAG\s+concerns \:exportable/,""
+    inject_into_file "config/routes.rb", after: "resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do" do
+      "\n    concerns [:searchable, :endnotable]\nINJECT_FLAG"
+    end
+    gsub_file "config/routes.rb", /[\n]INJECT_FLAG\s+concerns \:searchable/,""
   end
 
   end
