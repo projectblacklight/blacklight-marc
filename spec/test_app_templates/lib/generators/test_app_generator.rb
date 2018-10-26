@@ -9,6 +9,13 @@ class TestAppGenerator < Rails::Generators::Base
     end
   end
 
+  def add_gems
+    gem 'rsolr', '>= 1.0', '< 3'
+    Bundler.with_clean_env do
+      run 'bundle install'
+    end
+  end
+
   def remove_index
     remove_file "public/index.html"
   end
