@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   # Let's allow future versions of marc, count on
   # them to be backwards compat until 1.1
   spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.
-  spec.add_dependency "traject", "~>2.1"
+  spec.add_dependency "traject", "~>3.0"
   spec.add_dependency 'marc-fastxmlwriter' # NO REXML
 
   spec.add_development_dependency "bundler", "~> 1.3"

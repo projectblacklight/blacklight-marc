@@ -9,7 +9,7 @@ require 'traject/solr_json_writer'
 require 'traject/marc_reader'
 require 'marc/fastxmlwriter'
 
-class Blacklight::Marc::Indexer < Traject::Indexer
+class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
   autoload :Dewey, 'blacklight/marc/indexer/dewey'
   autoload :Formats, 'blacklight/marc/indexer/formats'
 
