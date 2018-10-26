@@ -9,13 +9,15 @@ class TestAppGenerator < Rails::Generators::Base
     end
   end
 
-  def remove_index
-    remove_file "public/index.html"
+  def add_gems
+    gem 'rsolr', '>= 1.0', '< 3'
+    Bundler.with_clean_env do
+      run 'bundle install'
+    end
   end
 
-  def install_rsolr
-    say_status("warning", "INSTALLING RSOLR", :yellow)
-    system "bundle exec gem install rsolr --version '~>2.0'"
+  def remove_index
+    remove_file "public/index.html"
   end
 
   def run_blacklight_generator
