@@ -13,6 +13,11 @@ class TestAppGenerator < Rails::Generators::Base
     remove_file "public/index.html"
   end
 
+  def install_rsolr
+    say_status("warning", "INSTALLING RSOLR", :yellow)
+    system "bundle exec gem install rsolr --version '~>2.0'"
+  end
+
   def run_blacklight_generator
     say_status("warning", "GENERATING BL", :yellow)
     generate 'blacklight:install', '--devise'
