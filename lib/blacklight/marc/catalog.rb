@@ -19,16 +19,6 @@ module Blacklight::Marc
       end
     end
 
-    # grabs a bunch of documents to export to endnote
-    def endnote
-      @response, deprecated_document_list = search_service.fetch(Array(params[:id]))
-      @documents = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document_list, "The @documents instance variable is deprecated and will be removed in Blacklight-marc 8.0")
-      
-      respond_to do |format|
-        format.endnote { render :layout => false }
-      end
-    end
-
     private
 
     def render_refworks_action? config, options = {}

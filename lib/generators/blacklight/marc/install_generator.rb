@@ -65,7 +65,6 @@ EOF
 
   def inject_blacklight_marc_routes
     route <<-EOF
-    concern :endnotable, Blacklight::Marc::Routes::Endnotable.new
     concern :marc_viewable, Blacklight::Marc::Routes::MarcViewable.new
     EOF
 
@@ -73,10 +72,6 @@ EOF
       "\n    concerns [:exportable, :marc_viewable]\nINJECT_FLAG"
     end
     gsub_file "config/routes.rb", /[\n]INJECT_FLAG\s+concerns \:exportable/,""
-    inject_into_file "config/routes.rb", after: "resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do" do
-      "\n    concerns [:searchable, :endnotable]\nINJECT_FLAG"
-    end
-    gsub_file "config/routes.rb", /[\n]INJECT_FLAG\s+concerns \:searchable/,""
   end
 
   end
