@@ -11,17 +11,14 @@ describe "catalog/index" do
       }
     end
 
-    @params = { 'content_format' => 'marc', :f => { :format => ['Book'] }, :page => 2 }
+    @params = { :content_format => 'marc', :f => { :format => ['Book'] }, :page => 2 }
 
     # run a solr query to get our data
     service = CatalogController.search_service_class.new(@config, @params)
     @response, _ = service.search_results
     @document_list = @response.documents
-
-    # munge the solr response to match test expectations
-    @document_list[1] = SolrDocument.new(@document_list[1].to_h.with_indifferent_access.reject! { |k,v| k == "author_display" })
-    @document_list[5] = SolrDocument.new(@document_list[1].to_h.with_indifferent_access.reject! { |k,v| k == "marc_display" })
   end
+
   before(:each) do
     # Not sure what Assigns was doing here ... dhf
     #    assigns[:response] = @rsolr_response

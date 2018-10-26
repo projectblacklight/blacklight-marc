@@ -12,6 +12,7 @@ describe "Bookmark tools" do
     visit solr_document_path('2007020969')
     click_button 'Bookmark'
     visit "/bookmarks.refworks_marc_txt?q="
-    expect(page).to have_content "LEADER 01490cam a2200361 a 4500001      2007020969"
+    # modern capybara normalizes whitespace so don't check for strict nbsp
+    expect(page).to have_content "LEADER 01490cam a2200361 a 4500001"
   end
 end

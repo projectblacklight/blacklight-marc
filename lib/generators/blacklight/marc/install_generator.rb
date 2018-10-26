@@ -38,16 +38,16 @@ EOF
       insert_into_file "app/models/solr_document.rb", :after => "include Blacklight::Solr::Document" do <<EOF
 
       # The following shows how to setup this blacklight document to display marc documents
-  extension_parameters[:marc_source_field] = :marc_display
+  extension_parameters[:marc_source_field] = :marc_ss
   extension_parameters[:marc_format_type] = :marcxml
   use_extension( Blacklight::Solr::Document::Marc) do |document|
-    document.key?( :marc_display  )
+    document.key?( SolrDocument.extension_parameters[:marc_source_field] )
   end
-
-  field_semantics.merge!(
-                         :title => "title_display",
-                         :author => "author_display",
-                         :language => "language_facet",
+  
+  field_semantics.merge!(    
+                         :title => "title_ssm",
+                         :author => "author_ssm",
+                         :language => "language_ssim",
                          :format => "format"
                          )
 

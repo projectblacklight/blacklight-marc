@@ -24,26 +24,26 @@ def get_hash_with_bad_marcxml
 end
 
   describe SolrDocument do
+    # SolrDocument leaks to other classes, so subclass here to test extension behavior
+    let(:test_rig) { Class.new(SolrDocument) }
+    before do
+      test_rig.extension_parameters[:marc_source_field]  = :marc_display
+      test_rig.extension_parameters[:marc_format_type]   = :marcxml
+
+      test_rig.registered_extensions = nil
+      test_rig.use_extension( Blacklight::Solr::Document::Marc ) { |document| document.has_key?(:marc_display)}
+    end
 
     before(:each) do
       @hash_with_marcxml = get_hash_with_marcxml['response']['docs'][0]
-      SolrDocument.extension_parameters[:marc_source_field]  = :marc_display
-      SolrDocument.extension_parameters[:marc_format_type]   = :marcxml
-
-      # rsolr seems to reload SolrDocument from time to time, so we can't
-      # count on the initializer to register the extension, need to re-register
-      # it.
-      SolrDocument.registered_extensions = nil
-      SolrDocument.use_extension( Blacklight::Solr::Document::Marc ) { |document| document.has_key?(:marc_display)}
-
-      @solrdoc = SolrDocument.new(@hash_with_marcxml)
-
+      
+      @solrdoc = test_rig.new(@hash_with_marcxml)
     end
 
     describe "ruby marc creation" do
 
       it "should have a valid to_marc" do
-        @solrdoc = SolrDocument.new(@hash_with_marcxml)
+        @solrdoc = test_rig.new(@hash_with_marcxml)
 
         expect(@solrdoc).to respond_to(:to_marc)
         expect(@solrdoc.to_marc).to be_kind_of(MARC::Record)
@@ -51,14 +51,14 @@ end
 
       it "should not try to create marc for objects w/out stored marc (marcxml test only at this time)" do
         @hash_without_marcxml = get_hash_without_marcxml['response']['docs'][0]
-        @solrdoc_without_marc = SolrDocument.new(@hash_without_marcxml)
+        @solrdoc_without_marc = test_rig.new(@hash_without_marcxml)
 
         expect(@solrdoc_without_marc).not_to respond_to(:to_marc)
       end
 
       it "should fail gracefully when given bad marc xml" do
         hash_with_bad_marcxml = get_hash_with_bad_marcxml['response']['docs'][0]
-        @solrdoc = SolrDocument.new(hash_with_bad_marcxml)
+        @solrdoc = test_rig.new(hash_with_bad_marcxml)
         expect(Rails.logger).to receive(:error).with(/Blacklight failed to parse MARC record. Exception was: Missing end tag for 'blarg'/)
         expect(@solrdoc).to respond_to(:to_marc)
         expect(@solrdoc.to_marc).to be_nil
