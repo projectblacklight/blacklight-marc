@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/projectblacklight/blacklight_marc.png?branch=master)](https://travis-ci.org/projectblacklight/blacklight_marc)
+[![Build Status](https://travis-ci.org/projectblacklight/blacklight-marc.png?branch=master)](https://travis-ci.org/projectblacklight/blacklight-marc)
 
 # Blacklight::Marc
 
