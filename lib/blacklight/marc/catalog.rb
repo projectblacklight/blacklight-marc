@@ -12,8 +12,10 @@ module Blacklight::Marc
       @response, deprecated_document = search_service.fetch params[:id]
       @document = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_document, "The @document instance variable is deprecated and will be removed in Blacklight-marc 8.0")
       respond_to do |format|
-        format.html
-        format.js { render :layout => false }
+        format.html do
+          return render layout: false if request.xhr?
+          # Otherwise draw the full page
+        end 
       end
     end
 
