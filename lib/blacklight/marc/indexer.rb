@@ -45,9 +45,16 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
       accumulator.replace Array(accumulator[0]) # just take the first
     end
   end
+
+  # @deprecated Use traject directly instead
+  # @option options [Array<String>] :translation_map translation map keys
+  # if multiple translation maps are defined, precedence is given to earlier keys.
   def map_value block, options={}
     if translation_map_arg  = options.delete(:translation_map)
-      translation_map = Traject::TranslationMap.new(translation_map_arg)
+      translation_map_arg = Array(translation_map_arg)
+      translation_map = translation_map_arg.reduce(nil) do |map, arg|
+        map ? Traject::TranslationMap.new(arg).merge(map) : Traject::TranslationMap.new(arg)
+      end
     else
       translation_map = nil
     end
@@ -62,6 +69,8 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
       end
     end
   end
+  deprecation_deprecate map_value: 'use traject translation directly; map_value will be removed in 8.0'
+
   def trim block, options={}
     lambda do |record, accumulator|
       vals = []

@@ -80,7 +80,9 @@ module TestIndexer
       acc << 'Unknown' # the default
       acc.replace Array(acc[0]) # just take the first
     end
-    to_field "mapped", map_value(literal('k'),translation_map:"test_formats")
+    to_field "mapped", map_value(literal('k'),translation_map:["test_formats","test_dewey"])
+    to_field "mapped_second", map_value(literal('000'),translation_map:["test_formats","test_dewey"])
+    to_field "mapped_third", map_value(literal('000'),translation_map:"test_dewey")
   end
   class Writer
     def self.accumulator=(acc)
@@ -127,6 +129,8 @@ describe Blacklight::Marc::Indexer do
       json = vals.first
       expect(json['format']).to eql(['Sound Disc'])
       expect(json['mapped']).to eql(['Image'])
+      expect(json['mapped_second']).to eql(['Bad Metadata'])
+      expect(json['mapped_third']).to eql(['000s - Computer Science, Information & General Works'])
     end
   end
 end
