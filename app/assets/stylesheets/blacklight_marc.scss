@@ -12,6 +12,9 @@ $marc_item_separator: 1px solid $text-muted !default;
 #marc_view
 {
 	text-align:left;
+	/* https://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
+	font-family: "Courier New", monospace, serif;
+	font-size: 1em;
 
   .field
   {
