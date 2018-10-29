@@ -102,18 +102,18 @@ class MarcIndexer < Blacklight::Marc::Indexer
 
     # Call Number fields
     to_field 'lc_callnum_ssm', extract_marc('050ab'), first_only
-    to_field 'lc_1letter_ssim', extract_marc('050ab', first: true, translation_map: 'callnumber_map') do |rec, acc|
-      # Just get the first letter to send to the translation map
-      acc.map!{|x| x[0]}
-    end
+
+    first_letter = lambda {|rec, acc| acc.map!{|x| x[0]} }
+    to_field 'lc_1letter_ssim', extract_marc('050ab'), first_only, first_letter, translation_map('callnumber_map')
 
     alpha_pat = /\A([A-Z]{1,3})\d.*\Z/
-    to_field 'lc_alpha_ssim', extract_marc('050a', first: true) do |rec, acc|
+    alpha_only = lambda do |rec, acc|
       acc.map! do |x|
         (m = alpha_pat.match(x)) ? m[1] : nil
       end
       acc.compact! # eliminate nils
     end
+    to_field 'lc_alpha_ssim', extract_marc('050a'), alpha_only, first_only 
 
     to_field 'lc_b4cutter_ssim', extract_marc('050a'), first_only
 
