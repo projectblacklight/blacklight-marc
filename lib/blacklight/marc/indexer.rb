@@ -36,25 +36,13 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
     end
   end
 
-  # @deprecated Use traject directly instead
+  # @deprecated Revise map order and use translation_map directly instead
   # @option options [Array<String>] :translation_map translation map keys
   # if multiple translation maps are defined, precedence is given to earlier keys.
-  def map_value translation_map_arg = nil
-    if translation_map_arg
-      translation_map_arg = Array(translation_map_arg)
-      translation_map = translation_map_arg.reduce(nil) do |map, arg|
-        map ? Traject::TranslationMap.new(arg).merge(map) : Traject::TranslationMap.new(arg)
-      end
-    else
-      translation_map = nil
-    end
-    lambda do |record, accumulator|
-      if translation_map
-        translation_map.translate_array! accumulator
-      end
-    end
+  def map_value *translation_map_arg
+    translation_map *(translation_map_arg.flatten.reverse)
   end
-  deprecation_deprecate map_value: 'use traject translation directly; map_value will be removed in 8.0'
+  deprecation_deprecate map_value: 'use traject translation directly and ascending priority of maps; map_value will be removed in 8.0'
 
   def trim
     lambda do |record, accumulator|
