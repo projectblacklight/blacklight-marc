@@ -35,22 +35,12 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
       provide "log.batch_size", 10_000
     end
   end
-  def first_value block, options={}
-    lambda do |record, accumulator|
-      if block.arity == 3
-        block.call(record,accumulator,options)
-      else
-        block.call(record,accumulator)
-      end
-      accumulator.replace Array(accumulator[0]) # just take the first
-    end
-  end
 
   # @deprecated Use traject directly instead
   # @option options [Array<String>] :translation_map translation map keys
   # if multiple translation maps are defined, precedence is given to earlier keys.
-  def map_value block, options={}
-    if translation_map_arg  = options.delete(:translation_map)
+  def map_value translation_map_arg = nil
+    if translation_map_arg
       translation_map_arg = Array(translation_map_arg)
       translation_map = translation_map_arg.reduce(nil) do |map, arg|
         map ? Traject::TranslationMap.new(arg).merge(map) : Traject::TranslationMap.new(arg)
@@ -59,11 +49,6 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
       translation_map = nil
     end
     lambda do |record, accumulator|
-      if block.arity == 3
-        block.call(record,accumulator,options)
-      else
-        block.call(record,accumulator)
-      end
       if translation_map
         translation_map.translate_array! accumulator
       end
@@ -71,17 +56,12 @@ class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
   end
   deprecation_deprecate map_value: 'use traject translation directly; map_value will be removed in 8.0'
 
-  def trim block, options={}
+  def trim
     lambda do |record, accumulator|
-      vals = []
-      if block.arity == 3
-        block.call(record,accumulator,options)
-      else
-        block.call(record,accumulator)
-      end
       accumulator.each {|x| x.strip!}
     end
   end
+
   def get_xml options={}
     lambda do |record, accumulator|
       accumulator << MARC::FastXMLWriter.encode(record)

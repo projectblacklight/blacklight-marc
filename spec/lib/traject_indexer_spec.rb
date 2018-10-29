@@ -70,7 +70,7 @@ module TestIndexer
       store "marc_source.type", "xml"
       store "writer_class_name", "TestIndexer::Writer"
     end
-    to_field "id", trim(extract_marc("001"), :first => true)
+    to_field "id", extract_marc("001"), first_only, trim
     to_field "format", extract_marc('007[0-1]') do |rec, acc|
       legacy_formats = Traject::TranslationMap.new("test_formats")
       acc << rec.leader[6..7]
@@ -80,9 +80,9 @@ module TestIndexer
       acc << 'Unknown' # the default
       acc.replace Array(acc[0]) # just take the first
     end
-    to_field "mapped", map_value(literal('k'),translation_map:["test_formats","test_dewey"])
-    to_field "mapped_second", map_value(literal('000'),translation_map:["test_formats","test_dewey"])
-    to_field "mapped_third", map_value(literal('000'),translation_map:"test_dewey")
+    to_field "mapped", literal('k'), map_value(["test_formats","test_dewey"])
+    to_field "mapped_second", literal('000'), map_value(["test_formats","test_dewey"])
+    to_field "mapped_third", literal('000'), map_value("test_dewey")
   end
   class Writer
     def self.accumulator=(acc)
