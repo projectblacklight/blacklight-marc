@@ -80,9 +80,9 @@ module TestIndexer
       acc << 'Unknown' # the default
       acc.replace Array(acc[0]) # just take the first
     end
-    to_field "mapped", literal('k'), map_value(["test_formats","test_dewey"])
-    to_field "mapped_second", literal('000'), map_value(["test_formats","test_dewey"])
-    to_field "mapped_third", literal('000'), map_value("test_dewey")
+    to_field "mapped", literal('k'), translation_map("test_formats","test_dewey")
+    to_field "mapped_second", literal('000'), translation_map("test_dewey","test_formats")
+    to_field "mapped_third", literal('000'), translation_map("test_dewey")
   end
   class Writer
     def self.accumulator=(acc)
