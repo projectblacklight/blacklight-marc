@@ -90,7 +90,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
       653a:654abcde:655abc
     ).join(':'))
     to_field 'subject_addl_tsim', extract_marc("600vwxyz:610vwxyz:611vwxyz:630vwxyz:650vwxyz:651vwxyz:654vwxyz:655vwxyz")
-    to_field 'subject_topic_ssim', extract_marc("600abcdq:610ab:611ab:630aa:650aa:653aa:654ab:655ab", :trim_punctuation => true)
+    to_field 'subject_ssim', extract_marc("600abcdq:610ab:611ab:630aa:650aa:653aa:654ab:655ab", :trim_punctuation => true)
     to_field 'subject_era_ssim',  extract_marc("650y:651y:654y:655y", :trim_punctuation => true)
     to_field 'subject_geo_ssim',  extract_marc("651a:650z",:trim_punctuation => true )
 
@@ -98,6 +98,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
     to_field 'published_ssm', extract_marc('260a', :trim_punctuation => true, :alternate_script=>false)
     to_field 'published_vern_ssm', extract_marc('260a', :trim_punctuation => true, :alternate_script=>:only)
     to_field 'pub_date_si', marc_publication_date
+    to_field 'pub_date_ssim', marc_publication_date
 
     # Call Number fields
     to_field 'lc_callnum_ssm', extract_marc('050ab', :first => true)
