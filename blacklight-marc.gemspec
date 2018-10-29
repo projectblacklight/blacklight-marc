@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{MARC support for Blacklight}
   spec.summary       = %q{MARC support for Blacklight}
   spec.homepage      = "https://github.com/projectblacklight/blacklight-marc"
-  spec.license       = "Apache 2.0"
+  spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
