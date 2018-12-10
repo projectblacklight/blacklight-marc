@@ -1,14 +1,20 @@
 require 'library_stdnums'
  require 'traject/null_writer'
 require 'traject/macros/marc21_semantics'
- 
+
 require 'traject/macros/marc_format_classifier'
- 
+
 require 'traject/solr_json_writer'
 require 'traject/marc_reader'
 require 'marc/fastxmlwriter'
 
-class Blacklight::Marc::Indexer < Traject::Indexer
+unless defined?(Traject::Indexer::MarcIndexer)
+  # shim to get traject 2 to act like traject 3
+  class Traject::Indexer::MarcIndexer < Traject::Indexer
+  end
+end
+
+class Blacklight::Marc::Indexer < Traject::Indexer::MarcIndexer
   autoload :Dewey, 'blacklight/marc/indexer/dewey'
   autoload :Formats, 'blacklight/marc/indexer/formats'
 
