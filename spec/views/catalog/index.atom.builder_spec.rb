@@ -14,7 +14,7 @@ describe "catalog/index" do
     @params = { :content_format => 'marc', :f => { :format => ['Book'] }, :page => 2 }
 
     # run a solr query to get our data
-    service = CatalogController.search_service_class.new(@config, @params)
+    service = CatalogController.search_service_class.new(config: @config, user_params: @params)
     @response, _ = service.search_results
     @document_list = @response.documents
   end
