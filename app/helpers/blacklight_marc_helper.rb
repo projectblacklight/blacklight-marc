@@ -5,9 +5,9 @@ module BlacklightMarcHelper
     "http://www.refworks.com/express/expressimport.asp?vendor=#{CGI.escape(params[:vendor] || application_name)}&filter=#{CGI.escape(params[:filter] || "MARC Format")}&encoding=65001" + (("&url=#{CGI.escape(params[:url])}" if params[:url]) || "")
   end
 
-  def refworks_solr_document_path opts = {}
-    if opts[:id]
-      refworks_export_url(url: solr_document_url(opts[:id], format: :refworks_marc_txt))
+  def refworks_solr_document_path args = {}, _options
+    if args[:id]
+      refworks_export_url(url: solr_document_url(args[:id], format: :refworks_marc_txt))
     end
   end
 
