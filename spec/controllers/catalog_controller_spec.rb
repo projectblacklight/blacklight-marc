@@ -22,7 +22,7 @@ describe CatalogController do
   describe "#librarian_view" do
     it "is successful" do
       get :librarian_view, params: { id: '86207417' }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

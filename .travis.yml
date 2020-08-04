@@ -4,10 +4,14 @@ sudo: false
 notifications:
   email: false
 
-rvm:
-  - 2.3.4
-  - 2.4.4
-  - 2.5.1
+matrix:
+  include:
+    - rvm: 2.7.1
+      env: "RAILS_VERSION=6.0.3.2"
+    - rvm: 2.6.6
+      env: "RAILS_VERSION=6.0.3.2"
+    - rvm: 2.6.6
+      env: "RAILS_VERSION=5.2.4.3"
 
 before_install:
   - gem install bundler
@@ -19,5 +23,5 @@ notifications:
 
 global_env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-  
-jdk: oraclejdk8
+
+jdk: openjdk11
