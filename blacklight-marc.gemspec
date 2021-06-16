@@ -21,9 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'blacklight', '> 6.1', '< 8.a'
   spec.add_dependency "library_stdnums"
   spec.add_dependency "rails"
-  # Let's allow future versions of marc, count on
-  # them to be backwards compat until 1.1
-  spec.add_dependency "marc",      ">= 0.4.3", "< 1.1"  # Marc record parser.
+  spec.add_dependency "marc",      ">= 0.4.3", "< 2.0"  # Marc record parser.
   spec.add_dependency "traject", ">= 2.1", "< 4"
   spec.add_dependency 'marc-fastxmlwriter' # NO REXML
 
