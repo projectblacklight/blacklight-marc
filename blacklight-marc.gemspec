@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "traject", ">= 2.1", "< 4"
   spec.add_dependency 'marc-fastxmlwriter' # NO REXML
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec-rails", '~> 3.0'
   spec.add_development_dependency "rspec-activemodel-mocks"
