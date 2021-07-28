@@ -59,7 +59,9 @@ module Blacklight::Solr::Document::Marc
   end
 
   def marc_record_from_marcxml
-    MARC::XMLReader.new(StringIO.new( fetch(_marc_source_field) )).to_a.first
+    marcxml = fetch(_marc_source_field)
+    marcxml = marcxml.first if marcxml.kind_of? Array
+    MARC::XMLReader.new(StringIO.new(marcxml)).to_a.first
   end
 
   def _marc_helper
