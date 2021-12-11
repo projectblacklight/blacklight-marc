@@ -9,7 +9,14 @@ module Blacklight::Marc
     end
 
     def librarian_view
-      @document = search_service.fetch(params[:id])
+      if Blacklight::VERSION >= '8'
+        @document = search_service.fetch(params[:id])
+        @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(@document.response, "The @response instance variable is deprecated and will be removed in Blacklight-marc 8.0")
+
+      else
+        deprecated_response, @document = search_service.fetch(params[:id])
+        @response = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(deprecated_response, "The @response instance variable is deprecated and will be removed in Blacklight-marc 8.0")
+      end
 
       respond_to do |format|
         format.html do
