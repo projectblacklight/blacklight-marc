@@ -29,7 +29,7 @@ describe "catalog/index" do
     params.merge!( @params )
     allow(view).to receive(:blacklight_config).and_return(@config)
     allow(view).to receive(:search_field_options_for_select).and_return([])
-
+    allow(controller).to receive(:search_state_class).and_return(Blacklight::SearchState)
     render :template => 'catalog/index', :formats => [:atom]
 
     # We need to use rexml to test certain things that have_tag wont' test
