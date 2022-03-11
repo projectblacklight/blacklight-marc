@@ -1,4 +1,3 @@
-require "blacklight/marc"
 require "rails"
 
 module Blacklight::Marc
@@ -14,8 +13,6 @@ module Blacklight::Marc
     end
 
     initializer 'blacklight_marc.initialize' do |app|
-      require 'blacklight/solr/document'
-
       Mime::Type.register_alias "text/plain", :refworks_marc_txt
       Mime::Type.register_alias "text/plain", :openurl_kev
       Mime::Type.register "application/x-endnote-refer", :endnote
