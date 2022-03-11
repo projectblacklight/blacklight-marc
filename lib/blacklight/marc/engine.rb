@@ -1,13 +1,5 @@
-require "rails"
-
 module Blacklight::Marc
   class Engine < Rails::Engine
-    config.autoload_paths += %W(
-      #{config.root}/app/presenters
-      #{config.root}/app/controllers/concerns
-      #{config.root}/app/models/concerns
-    )
-
     rake_tasks do
       load "railties/solr_marc.rake"
     end
@@ -20,6 +12,13 @@ module Blacklight::Marc
       Mime::Type.register "application/marcxml+xml", :marcxml,
       ["application/x-marc+xml", "application/x-marcxml+xml",
        "application/marc+xml"]
+
+       # these are here for backwards compatibility with the old class names,
+       # which zeitwerk didn't care for
+       config.after_initialize do
+         Blacklight::Solr::Document::Marc = Blacklight::Marc::DocumentExtension
+         Blacklight::Solr::Document::MarcExport = Blacklight::Marc::DocumentExport
+       end
      end
   end
 end

@@ -9,7 +9,7 @@
 # This extension would normally be registered using
 # Blacklight::Solr::Document#use_extension.  eg:
 #
-# SolrDocument.use_extension( Blacklight::Solr::Document::Marc ) { |document| my_logic_for_document_has_marc?( document ) }
+# SolrDocument.use_extension( Blacklight::Marc::DocumentExtension ) { |document| my_logic_for_document_has_marc?( document ) }
 #
 # This extension also expects a :marc_source_field and :marc_format_type to
 # be registered with the hosting classes extension_parameters. In an initializer
@@ -18,15 +18,16 @@
 # SolrDocument.extension_parameters[:marc_format_type] = :marc21 # or :marcxml
 require 'marc'
 
-module Blacklight::Solr::Document::Marc
+module Blacklight::Marc
+  module DocumentExtension
 
-  include Blacklight::Solr::Document::MarcExport # All our export_as stuff based on to_marc.
+  include Blacklight::Marc::DocumentExport # All our export_as stuff based on to_marc.
 
   class UnsupportedMarcFormatType < RuntimeError; end
 
   def self.extended(document)
     # Register our exportable formats, we inherit these from MarcExport
-    Blacklight::Solr::Document::MarcExport.register_export_formats( document )
+    Blacklight::Marc::DocumentExport.register_export_formats( document )
   end
 
   # ruby-marc object
@@ -78,4 +79,5 @@ module Blacklight::Solr::Document::Marc
     self.class.extension_parameters[:marc_format_type]
   end
 
+  end
 end
