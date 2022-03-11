@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'bookmarks/_endnote.html.erb' do
+RSpec.describe 'bookmarks/_endnote' do
   before do
     allow(controller).to receive(:blacklight_config)
       .and_return(CatalogController.blacklight_config)
