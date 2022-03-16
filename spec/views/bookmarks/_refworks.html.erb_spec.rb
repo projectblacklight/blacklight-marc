@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'bookmarks/_refworks.html.erb' do
+RSpec.describe 'bookmarks/_refworks' do
   before do
     allow(controller).to receive(:blacklight_config)
       .and_return(CatalogController.blacklight_config)

@@ -1,2 +1,1 @@
-gem 'blacklight', github: 'projectblacklight/blacklight'
 gem "traject", '~>3.0'
