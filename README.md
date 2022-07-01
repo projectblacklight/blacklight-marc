@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/projectblacklight/blacklight-marc.png?branch=master)](https://travis-ci.org/projectblacklight/blacklight-marc)
+![Build Status](https://github.com/projectblacklight/blacklight-marc/actions/workflows/ruby.yml/badge.svg?branch=main)
 
 # Blacklight::Marc
 
