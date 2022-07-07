@@ -1,25 +1,14 @@
 /* border between items on marc view */
 $marc_item_separator: 1px solid $text-muted !default;
 
-#librarian_view
-{
-	left:-17%;
-	text-align:left;
-	top:10%;
-	width:700px;
-}
+.marc_view {
+	font-family: $font-family-monospace;
 
-#marc_view
-{
-	text-align:left;
-	/* https://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
-	font-family: "Courier New", monospace, serif;
-	font-size: 1em;
-
-  .field
-  {
+  .field {
+		align-items: flex-start;
     border-bottom: $marc_item_separator;
-    clear:both;
+		display: flex;
+		gap: 2em;
   }
 
   .ind1, .ind2
@@ -28,13 +17,7 @@ $marc_item_separator: 1px solid $text-muted !default;
     padding: 0 ($spacer / 2);
   }
 
-  .subfields
-  {
-    padding-left:5em;
-  }
-
-  .tag_ind
-  {
-    float:left;
-  }
+	.tag_ind {
+		flex-shrink: 0;
+	}
 }

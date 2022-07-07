@@ -1,32 +1,30 @@
-<div id="marc_view" class="modal-body">
-  <% fields = document.to_marc.find_all{|f| ('000'..'999') === f.tag }  %>
+<div id="marc_view" class="marc_view">
   <div class="field"><%= t('blacklight.search.librarian_view.leader', :leader => document.to_marc.leader) %></div>
-  <%- fields.each do |field| -%>
-  <%- unless field.tag.to_s == "940" -%>
+  <%- document.to_marc.each do |field| -%>
     <div class="field">
-      <div class="tag_ind">
-        <span class="tag">
-          <%= h(field.tag) %>
-        </span>
       <%- if field.is_a?(MARC::ControlField) -%>
-        <span class="control_field_values">
-          <%= h(field.value) %>
-        </span>
+      <div class="tag_ind">
+        <span class="tag"><%= field.tag %></span>
+      </div>
+      <span class="control_field_values">
+        <%= h(field.value) %>
+      </span>
       <%- else -%>
+      <div class="tag_ind">
+        <span class="tag"><%= field.tag %></span>
         <div class="ind1">
-          <%= !field.indicator1.blank? ? field.indicator1 : "&nbsp;".html_safe -%>
+          <%= field.try(:indicator1).present? ? field.indicator1 : "&nbsp;".html_safe -%>
         </div>
         <div class="ind2">
-          <%= !field.indicator2.blank? ? field.indicator2 : "&nbsp;".html_safe -%>
+          <%= field.try(:indicator2).present? ? field.indicator2 : "&nbsp;".html_safe -%>
         </div>
       </div>
       <div class="subfields">
         <%- field.each do |sub| -%>
-        <span class="sub_code"><%= h(sub.code) %>|</span> <%= h(sub.value) %>
-      <%- end -%>
-      <%- end -%>
+        <span class="sub_code"><%= sub.code %>|</span> <%= sub.value %>
+        <%- end -%>
       </div>
+      <%- end -%>
     </div>
-  <%- end-%>
   <%- end -%>
 </div>

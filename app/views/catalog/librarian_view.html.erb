@@ -1,13 +1,8 @@
-
-<div class="modal-header">
-  <h1 class="modal-title"><%= t('blacklight.search.librarian_view.title') %></h1>
-  <button type="button" class="blacklight-modal-close close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">×</span>
-  </button>
-</div>
-<%- if @response.documents.first.respond_to?(:to_marc) -%>
-  <%= render "marc_view", document: @response.documents.first %>
-<%- else %>
-  <%= t('blacklight.search.librarian_view.empty') %>
-<%- end -%>
-
+<%= render Blacklight::System::ModalComponent.new do |component| %>
+  <% component.title { t('blacklight.search.librarian_view.title') } %>
+  <%- if @document.respond_to?(:to_marc) -%>
+    <%= render "marc_view", document: @document %>
+  <%- else %>
+    <%= t('blacklight.search.librarian_view.empty') %>
+  <%- end -%>
+<% end %>

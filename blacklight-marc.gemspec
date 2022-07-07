@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'blacklight', '~> 7.0'
+  spec.add_dependency 'blacklight', '>= 7.11', '< 9'
   spec.add_dependency "library_stdnums"
   spec.add_dependency "rails"
   spec.add_dependency "marc",      ">= 0.4.3", "< 2.0"  # Marc record parser.
