@@ -106,7 +106,7 @@ def compute_arguments
       File.join( plugin_site_path, "config-#{::Rails.env}.properties"),
       File.join( plugin_site_path, "config.properties"),
     ].each do |file_path|
-      if File.exists?(file_path)
+      if File.exist?(file_path)
         arguments[:config_properties_path] = file_path
         break
       end
@@ -147,7 +147,7 @@ def locate_path(*subpath_fragments)
   local_root = File.expand_path File.join(File.dirname(__FILE__), '..', '..')
   subpath = subpath_fragments.join('/')
   base_match = [Rails.root, local_root].find do |base|
-    File.exists? File.join(base, subpath)
+    File.exist? File.join(base, subpath)
   end
   File.join(base_match.to_s, subpath) if base_match
 end
