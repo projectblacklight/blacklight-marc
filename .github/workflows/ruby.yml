@@ -1,26 +1,37 @@
----
 name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        rails_version: [6.1.4.7, 7.0.2.3]
         ruby: [2.7, '3.0']
+        rails_version: ['6.1.7', '7.0.4']
+        blacklight_version: ['~> 7.0']
+        experimental: [false]
         include:
-          - rails_version: 5.2.4.4
-            ruby: 2.7
-          - rails_version: 6.0.3.4
-            ruby: 2.7
+        - ruby: '3.1'
+          rails_version: '7.0.4'
+          blacklight_version: '~> 7.0'
+          experimental: false
+        - ruby: '3.1'
+          rails_version: '7.0.4'
+          blacklight_version: '8.0.0.beta4'
+          experimental: false
+        - ruby: '3.1'
+          rails_version: '7.0.4'
+          blacklight_version: 'github'
+          experimental: true
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
+      BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby ${{ matrix.ruby }}

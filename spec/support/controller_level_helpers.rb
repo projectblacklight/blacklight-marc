@@ -1,7 +1,5 @@
 module ControllerLevelHelpers
   module ControllerViewHelpers
-    include Blacklight::Facet
-
     def blacklight_config
       controller.blacklight_config
     end

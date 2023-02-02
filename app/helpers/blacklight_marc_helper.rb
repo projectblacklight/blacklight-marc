@@ -12,8 +12,8 @@ module BlacklightMarcHelper
   end
 
   # For exporting a single endnote document. (endnote_catalog_path is defined by blacklight-marc and it is used for multiple document export)
-  def single_endnote_catalog_path opts = {}, *_
-    solr_document_path(opts.merge(format: 'endnote'))
+  def single_endnote_catalog_path opts = {}, **kwargs
+    solr_document_path(opts['id'], **kwargs.merge(opts).merge(format: 'endnote').except('id'))
   end
 
 
