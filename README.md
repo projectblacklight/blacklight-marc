@@ -35,7 +35,7 @@ include Blacklight::Marc::Catalog
 and the following code is generated into SolrDocument:
 
 ```ruby
-use_extension( Blacklight::Solr::Document::Marc) do |document|
+use_extension( Blacklight::Marc::DocumentExtension) do |document|
   document.key?( :marc_display  )
 end
 ```
