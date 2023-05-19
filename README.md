@@ -1,6 +1,6 @@
 ![Build Status](https://github.com/projectblacklight/blacklight-marc/actions/workflows/ruby.yml/badge.svg?branch=main)
 
-# Blacklight::Marc
+# Blacklight::Marc 
 
 MARC-specific enhancements for [Blacklight](https://github.com/projectblacklight/blacklight)
 
