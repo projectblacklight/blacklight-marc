@@ -1,5 +1,5 @@
 <%= render Blacklight::System::ModalComponent.new do |component| %>
-  <% component.title { t('blacklight.search.librarian_view.title') } %>
+  <% component.with_title { t('blacklight.search.librarian_view.title') } %>
   <%- if @document.respond_to?(:to_marc) -%>
     <%= render "marc_view", document: @document %>
   <%- else %>
