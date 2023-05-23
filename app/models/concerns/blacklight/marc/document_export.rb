@@ -299,6 +299,10 @@ module Blacklight::Marc::DocumentExport
       pub_info << clean_end_punctuation(marc["260"]["a"]).strip if marc["260"]["a"]
       pub_info << ": #{clean_end_punctuation(marc["260"]["b"]).strip}" if marc["260"]["b"]
       pub_info << ", #{setup_pub_date(marc)}" if marc["260"]["c"]
+    elsif marc["264"] and (marc["264"]["a"] or marc["264"]["b"])
+      pub_info << clean_end_punctuation(marc["264"]["a"]).strip if marc["264"]["a"]
+      pub_info << ": #{clean_end_punctuation(marc["264"]["b"]).strip}" if marc["264"]["b"]
+      pub_info << ", #{setup_pub_date(marc)}" if marc["264"]["c"]
     elsif marc["502"] and marc["502"]["a"] # MARC 502 is the Dissertation Note.  This holds the correct pub info for these types of records.
       pub_info << marc["502"]["a"]
     elsif marc["502"] and (marc["502"]["b"] or marc["502"]["c"] or marc["502"]["d"]) #sometimes the dissertation note is encoded in pieces in the $b $c and $d sub fields instead of lumped into the $a
@@ -414,8 +418,8 @@ module Blacklight::Marc::DocumentExport
     text
   end
   def setup_pub_date(record)
-    if !record.find{|f| f.tag == '260'}.nil?
-      pub_date = record.find{|f| f.tag == '260'}
+    if !record.find{|f| ['260', '264'].include?(f.tag)}.nil?
+      pub_date = record.find{|f| ['260', '264'].include?(f.tag)}
       if pub_date.find{|s| s.code == 'c'}
         date_value = pub_date.find{|s| s.code == 'c'}.value.gsub(/[^0-9|n\.d\.]/, "")[0,4] unless pub_date.find{|s| s.code == 'c'}.value.gsub(/[^0-9|n\.d\.]/, "")[0,4].blank?
       end
@@ -425,7 +429,7 @@ module Blacklight::Marc::DocumentExport
   end
   def setup_pub_info(record)
     text = ''
-    pub_info_field = record.find{|f| f.tag == '260'}
+    pub_info_field = get_publication_data(record)
     if !pub_info_field.nil?
       a_pub_info = pub_info_field.find{|s| s.code == 'a'}
       b_pub_info = pub_info_field.find{|s| s.code == 'b'}
@@ -549,6 +553,10 @@ module Blacklight::Marc::DocumentExport
       end
     end
     {:primary_authors => primary_authors, :translators => translators, :editors => editors, :compilers => compilers}
+  end
+
+  def get_publication_data(record)
+    publication_data = record.find{|field| field.tag == '260'} || record.find{|field| field.tag == '264'}
   end
 
   def abbreviate_name(name)
