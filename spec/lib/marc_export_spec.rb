@@ -629,24 +629,62 @@ describe Blacklight::Solr::Document::MarcExport do
     end
   end
 
-  describe "export_as_openurl_ctx_kev" do
-    it "should create the appropriate context object for books" do
-      record = @typical_record.export_as_openurl_ctx_kev('Book')
-      expect(record).to match(/.*mtx%3Abook.*rft.genre=book.*rft.btitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.isbn=/) and
-      expect(record).not_to match(/.*rft.genre=article.*rft.issn=.*/)
+  describe "#export_as_openurl_ctx_kev" do
+    subject(:record) { @typical_record.export_as_openurl_ctx_kev(format) }
+
+    context 'with a Book' do
+      let(:format) { 'Book' }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Abook.*rft.genre=book.*rft.btitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.isbn=/)
+        expect(record).not_to match(/.*rft.genre=article.*rft.issn=.*/)
+      end
     end
-    it "should create the appropriate context object for journals" do
-      record = @typical_record.export_as_openurl_ctx_kev('Journal')
-      record_journal_other = @typical_record.export_as_openurl_ctx_kev('Journal/Magazine')
-      expect(record).to match(/.*mtx%3Ajournal.*rft.genre=article.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.atitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.issn=/) and
-      expect(record_journal_other).to eq(record) and
-      expect(record).not_to match(/.*rft.genre=book.*rft.isbn=.*/)
+
+    context 'with a Journal' do
+      let(:format) { 'Journal' }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Ajournal.*rft.genre=article.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.atitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.issn=/)
+        expect(record).not_to match(/.*rft.genre=book.*rft.isbn=.*/)
+      end
     end
-    it "should create the appropriate context object for other content" do
-      record = @typical_record.export_as_openurl_ctx_kev('NotARealFormat')
-      expect(record).to match(/.*mtx%3Adc.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.creator=.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.format=notarealformat/) and
-      expect(record).not_to match(/.*rft.isbn=.*/) and
-      expect(record).not_to match(/.*rft.issn=.*/)
+
+    context 'with a Journal/Magazine' do
+      let(:format) { 'Journal/Magazine' }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Ajournal.*rft.genre=article.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.atitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.issn=/)
+        expect(record).not_to match(/.*rft.genre=book.*rft.isbn=.*/)
+      end
+    end
+
+    context 'with other formats' do
+      let(:format) { 'NotARealFormat' }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Adc.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.creator=.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.format=notarealformat/)
+        expect(record).not_to match(/.*rft.isbn=.*/)
+        expect(record).not_to match(/.*rft.issn=.*/)
+      end
+    end
+
+    context 'with an array' do
+      let(:format) { ['Journal'] }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Ajournal.*rft.genre=article.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.atitle=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.issn=/)
+        expect(record).not_to match(/.*rft.genre=book.*rft.isbn=.*/)
+      end
+    end
+
+    context 'with a nil format' do
+      let(:format) { nil }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Adc.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.creator=.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.format=/)
+      end
+    end
+
+    context 'with an empty array' do
+      let(:format) { [] }
+      it "creates the appropriate context object" do
+        expect(record).to match(/.*mtx%3Adc.*rft.title=Apples\+%3A\+botany%2C\+production%2C\+and\+uses.*rft.creator=.*rft.aucorp=Bobs\+Your\+Uncle.*rft.date=c2003.*rft.place=Oxon%2C\+U.K.*rft.pub=CABI\+Pub.*rft.format=/)
+      end
     end
   end
 
