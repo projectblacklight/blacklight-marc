@@ -571,9 +571,8 @@ module Blacklight::Marc::DocumentExport
 
   def name_reverse(name)
     name = clean_end_punctuation(name)
-    return name unless name =~ /,/
+    return name if name == ", " || !(name =~ /,/)
     temp_name = name.split(", ")
-    return name if temp_name.empty?
     return temp_name.last + " " + temp_name.first
   end
 end
