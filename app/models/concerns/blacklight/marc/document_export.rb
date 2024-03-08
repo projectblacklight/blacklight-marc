@@ -561,6 +561,7 @@ module Blacklight::Marc::DocumentExport
 
   def abbreviate_name(name)
     name_parts = name.split(", ")
+    return "" if name_parts.empty?
     first_name_parts = name_parts.last.split(" ")
     temp_name = name_parts.first + ", " + first_name_parts.first[0,1] + "."
     first_name_parts.shift
@@ -570,7 +571,7 @@ module Blacklight::Marc::DocumentExport
 
   def name_reverse(name)
     name = clean_end_punctuation(name)
-    return name unless name =~ /,/
+    return name if name == ", " || !(name =~ /,/)
     temp_name = name.split(", ")
     return temp_name.last + " " + temp_name.first
   end
