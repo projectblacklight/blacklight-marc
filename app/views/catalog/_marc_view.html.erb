@@ -1,4 +1,4 @@
-<div id="marc_view" class="marc_view">
+<div id="marc_view" class="marc_view font-monospace">
   <div class="field"><%= t('blacklight.search.librarian_view.leader', :leader => document.to_marc.leader) %></div>
   <%- document.to_marc.each do |field| -%>
     <div class="field">
