@@ -16,7 +16,7 @@ module Blacklight::Marc
     source_root File.expand_path('../templates', __FILE__)
 
     def assets
-      insert_into_file "app/assets/stylesheets/blacklight.scss", after: "@import 'blacklight/blacklight';" do
+      append_to_file "app/assets/stylesheets/application.bootstrap.scss" do
 <<-EOF
 
 @import 'blacklight_marc';
