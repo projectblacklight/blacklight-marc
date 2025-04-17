@@ -48,7 +48,7 @@ namespace :solr do
         if  (ENV["NOOP"] || (!solrmarc_arguments["MARC_FILE"]))
           Rake::Task[ "solr:marc:index:info" ].execute
         else
-          require './app/models/marc_indexer' unless defined?(MarcIndexer)
+          # require './app/models/marc_indexer' unless defined?(MarcIndexer)
           open(solrmarc_arguments['MARC_FILE']) do |io|
             SolrMarc.indexer.process(io)
           end
@@ -151,5 +151,3 @@ def locate_path(*subpath_fragments)
   end
   File.join(base_match.to_s, subpath) if base_match
 end
-
-

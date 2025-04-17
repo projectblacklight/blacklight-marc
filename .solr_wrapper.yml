@@ -3,3 +3,5 @@
 collection:
   dir: solr/conf/
   name: blacklight-core
+port: 8983
+version: 9.6.1

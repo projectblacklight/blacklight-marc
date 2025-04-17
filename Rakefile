@@ -8,7 +8,7 @@ task :default => [:ci]
 
 task :ci => ['engine_cart:generate'] do
   require 'solr_wrapper'
-  SolrWrapper.wrap(port: '8983') do |solr|
+  SolrWrapper.wrap do |solr|
     solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), "solr", "conf")) do
       Rake::Task["blacklight_marc:fixtures"].invoke
       Rake::Task['spec'].invoke
