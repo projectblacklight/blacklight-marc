@@ -12,22 +12,28 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        ruby: ["3.3"]
-        rails_version: ["7.1.4", "7.2.1"]
+        ruby: ["3.4"]
+        rails_version: ["8.0.1"]
         blacklight_version: ["~> 8.1"]
         experimental: [false]
         include:
-          - ruby: "3.1"
-            rails_version: "7.0.8"
+          - ruby: "3.4"
+            rails_version: "8.0.1"
+            blacklight_version: "github"
+            experimental: true
+          - ruby: "3.3"
+            rails_version: "7.2.2.1"
             blacklight_version: "~> 8.1"
             experimental: false
           - ruby: "3.2"
             rails_version: "7.1.4"
-            blacklight_version: "github"
+            blacklight_version: "~> 8.1"
             experimental: true
+
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
+      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-kamal --skip-solid --skip-coffee --skip-test -a propshaft --css=bootstrap"
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby ${{ matrix.ruby }}

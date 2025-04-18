@@ -27,7 +27,8 @@ namespace :solr do
 
 
     desc "Index the supplied test data into Solr"
-    task :index_test_data => :environment do
+    task :index_test_data do
+      Rake::Task[ "environment" ].invoke
       # for now we are assuming test data is located in BL source checkout.
       ENV['MARC_FILE'] = File.expand_path("../../../test_support/data/test_data.utf8.mrc", __FILE__ )
 
@@ -48,7 +49,6 @@ namespace :solr do
         if  (ENV["NOOP"] || (!solrmarc_arguments["MARC_FILE"]))
           Rake::Task[ "solr:marc:index:info" ].execute
         else
-          require './app/models/marc_indexer' unless defined?(MarcIndexer)
           open(solrmarc_arguments['MARC_FILE']) do |io|
             SolrMarc.indexer.process(io)
           end
@@ -151,5 +151,3 @@ def locate_path(*subpath_fragments)
   end
   File.join(base_match.to_s, subpath) if base_match
 end
-
-
