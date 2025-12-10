@@ -12,9 +12,10 @@ describe "catalog/index" do
     end
 
     @params = { :content_format => 'marc', :f => { :format => ['Book'] }, :page => 2 }
+    search_state = Blacklight::SearchState.new(@params, @config)
 
     # run a solr query to get our data
-    service = CatalogController.search_service_class.new(config: @config, user_params: @params)
+    service = CatalogController.search_service_class.new(config: @config, user_params: @params, search_state: search_state)
     @response, _ = service.search_results
     @document_list = @response.documents
   end
